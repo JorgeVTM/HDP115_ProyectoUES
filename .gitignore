@@ -1,1 +1,5 @@
 ProyectoUES/__pycache__
+apps/OfertasLaborales/__pycache__
+apps/OfertasLaborales/migrations/__pycache__
+apps/OfertasLaborales/migrations/*.py
+!apps/OfertasLaborales/migrations/__init__.py
