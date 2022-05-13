@@ -2,20 +2,47 @@
 {% load compress %}
 {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     {% compress css %}
-        <link type="text/x-scss" rel="stylesheet" href="{% static 'css/styles.scss' %}">
+    <link type="text/x-scss" rel="stylesheet" href="{% static 'css/styles.scss' %}">
     {% endcompress %}
 </head>
+
 <body>
-    <h1>WELCOME</h1>
-    <a href="{% url 'administracion' %}">administracion</a>
-    {% block admin %}
-    
-    {% endblock admin %}
+    <!-- Navegación principal -->
+    <header>
+        <div class="presentacion-seccion">
+            <div>
+                <img src="{% static 'img/logo.png' %}" alt="logo ues">
+                <h1>Universidad de El Salvador</h1>
+            </div>
+        </div>
+        <div class="caja-navegacion">
+            <nav class="navbar-principal">
+                <div class="navbar-left">
+                    <ul>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                          </svg>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navbar-right">
+                    <ul>
+                        <li><a href="/">Registrarse</a></li>
+                        <li><a href="/">Iniciar sesión</a></li>
+                    </ul>                    
+                </div>
+            </nav>    
+        </div>
+    </header>
+
 </body>
+
 </html>

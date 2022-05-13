@@ -1,6 +1,14 @@
-*{
-    margin: 0;
-}
-body{
-    background: #f0f0f0;
-}
+// Compresion de todas las hojas de estilos
+
+// Fuentes para la aplicación
+@import 'fonts';
+
+// Fuentes para la aplicación
+@import 'colores';
+
+// Estilos generales de la aplicación
+@import 'generales';
+
+// Estilos para todos los menus de la aplicación
+@import 'menus';
+

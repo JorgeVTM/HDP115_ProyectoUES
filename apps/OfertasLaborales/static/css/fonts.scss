@@ -1,0 +1,45 @@
+//Fuentes que se usaran en la aplicación web
+@mixin roboto-normal {
+    font-family: "Roboto", sans-serif;
+    font-weight: normal;
+}
+
+@mixin roboto-bold {
+    font-family: "Roboto", sans-serif;
+    font-weight: bold;
+}
+
+@mixin roboto-lighter {
+    font-family: "Roboto", sans-serif;
+    font-weight: lighter;   
+}
+
+@mixin roboto-100 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+}
+
+@mixin roboto-300 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+}
+
+@mixin roboto-400 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;   
+}
+
+@mixin roboto-500 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+}
+
+@mixin roboto-700 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+}
+
+@mixin roboto-900 {
+    font-family: "Roboto", sans-serif;
+    font-weight: 900;   
+}
