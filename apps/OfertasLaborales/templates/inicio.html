@@ -35,14 +35,25 @@
                 </div>
                 <div class="navbar-right">
                     <ul>
+                        {% if user.is_authenticated %}
+                        <li><a href="/">{{user.username}}</a></li>
+                        <li><a href="/"><img src="" alt="sub-menu"></a></li>      
+                        {% endif %}
                         <li><a href="/">Registrarse</a></li>
-                        <li><a href="/">Iniciar sesión</a></li>
+                        <li><a href="/">Iniciar sesión</a></li>                        
                     </ul>                    
                 </div>
             </nav>    
         </div>
     </header>
 
+    {% block container %}
+    
+    {% endblock container %}
+
+    {% block javascripts %}
+    
+    {% endblock javascripts %}
 </body>
 
 </html>
