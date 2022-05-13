@@ -1,3 +1,5 @@
+!staticfiles/
+staticfiles/CACHE/*
 ProyectoUES/__pycache__
 apps/OfertasLaborales/__pycache__
 apps/OfertasLaborales/migrations/__pycache__
