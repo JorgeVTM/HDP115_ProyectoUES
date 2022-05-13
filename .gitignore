@@ -1,6 +1,15 @@
+# Ignorar archivos del proyecto en general
 !staticfiles/
 staticfiles/CACHE/*
 ProyectoUES/__pycache__
+
+# Ignorar el cache de la aplicación Administración
+apps/Administracion/__pycache__
+apps/Administracion/migrations/__pycache__
+apps/Administracion/migrations/*.py
+!apps/Administracion/migrations/__init__.py
+
+# Ignorar el cache de la aplicación OfertasLaborales
 apps/OfertasLaborales/__pycache__
 apps/OfertasLaborales/migrations/__pycache__
 apps/OfertasLaborales/migrations/*.py

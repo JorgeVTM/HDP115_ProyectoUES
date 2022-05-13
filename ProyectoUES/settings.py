@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "compressor",
     
     # Apps de nuestra aplicación
+    'apps.Administracion',
     'apps.OfertasLaborales',
 ]
 
