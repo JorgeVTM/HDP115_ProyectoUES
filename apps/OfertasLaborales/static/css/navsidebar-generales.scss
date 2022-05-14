@@ -1,0 +1,102 @@
+// Estilos importados
+@use 'fonts';
+@use 'colores';
+
+// Estilos generales
+@mixin width-height($width: initial, $height: initial) {
+    width: $width;
+    height: $height;
+}
+@mixin display-aling-justify($display: initial, $aling-items: initial, $justify-content: initial) {
+    display: $display;
+    align-items: $aling-items;
+    justify-content: $justify-content;
+}
+
+// Estilos y clases para el navbar general de todas las apps
+.caja-presentacion{
+    display: flex;
+    height: 65px;
+    padding: 10px;
+    background-color: $color-navbar-1;
+    border-bottom: 1px solid $color-border-1;
+}
+
+.logotema, .navbar, .caja-user{
+    display: inline-flex;
+    align-items: center;
+    padding: 15px;
+}
+
+.logotema{
+    h1{color: $color-texto-1;}
+}
+
+.navbar{
+    margin-left: auto;
+    a{
+        margin: 12px;
+        color: $color-texto-1;
+    }
+}
+
+.caja-user{
+    padding: 0;
+    h2,svg{
+        color: $color-texto-1;
+        margin: 0 8px;
+    }
+    svg{
+        @include width-height(40px, 40px)
+    }
+}
+
+// Estilos y clases para el sidebar principal de todas las clases
+.caja-contenido{
+    display: flex;
+}
+
+.sidebar-principal{
+    @include width-height(0,100%);
+    background-color: $color-sidebar-1;
+    border-left: 1px solid $color-border-1;
+    position: fixed;
+    overflow: hidden;
+    z-index: 1;
+    right: 0;
+}
+
+.btn-sidebar{
+    background-color: $color-sidebar-1;
+    padding: 10px;
+    svg{
+        @include width-height(35px, 35px);
+    }
+    :hover{
+        color: $color-hover-1;
+        cursor: pointer;
+    }
+}
+
+.sidebar{
+    border-top: 20px solid $color-navbar-1;
+}
+
+.sidebar-items{
+    li, a{
+        display: flex;
+        align-items: center;
+        color: $color-texto-2;
+        :hover{
+            color: $color-hover-1;
+        }
+    }
+    li{
+        @include width-height(200px, 2.5em);
+        padding-left: 10px
+    }
+    svg{
+        @include width-height(18px, 18px);
+        margin-right: 10px;
+    }
+}
