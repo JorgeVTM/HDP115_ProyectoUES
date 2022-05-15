@@ -1,6 +1,6 @@
 # Ignorar archivos del proyecto en general
-!staticfiles/
-staticfiles/CACHE/*
+!static/
+static/CACHE/*
 ProyectoUES/__pycache__
 
 # Ignorar el cache de la aplicación Administración
