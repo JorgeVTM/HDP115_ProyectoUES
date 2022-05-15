@@ -6,7 +6,7 @@ from django.views.generic.list import MultipleObjectMixin
 
 class Inicio(ListView):
     
-    template_name = 'inicio.html'
+    template_name = 'OfertasLaborales/inicio.html'
     
     def get(self, request):
         return render(request, self.template_name)
