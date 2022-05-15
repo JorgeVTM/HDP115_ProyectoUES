@@ -9,6 +9,9 @@
 // Estilos generales de la aplicación
 @import 'generalidades';
 
-// Estilos para todos los navbar y sidebar
-@import 'navsidebar';
+// Estilos para la presentacion general en todas las apps
+@import 'base';
+
+// Estilos para la vista inicio ofertas laborales
+@import 'ofertaslaborales';
 

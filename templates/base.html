@@ -9,12 +9,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     {% compress css %}
-    <link type="text/x-scss" rel="stylesheet" href="{% static 'css/styles.scss' %}">
+    <link type="text/x-scss" rel="stylesheet" href="{% static 'css/styles.scss' %}">    
     {% endcompress %}
+    
 </head>
 
 <body>
     {% comment %} Navegación principal {% endcomment %}
+    <div class="ventana-bloqueo"></div>
     <header>
         <div class="caja-presentacion">
             <div class="logotema">
@@ -41,11 +43,9 @@
 
     {% comment %} Contenido principal {% endcomment %}
     <div class="caja-contenido">
-
         {% block contenido %}
 
         {% endblock contenido %}  
-
         <aside class="sidebar-principal" id='sidebar'>
             <button class="btn-sidebar" id="btn-sidebar">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">

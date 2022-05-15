@@ -13,6 +13,15 @@
     justify-content: $justify-content;
 }
 
+// Estilo ventana bloque cuando el sidebar principal este activo
+.ventana-bloqueo{
+    @include width-height(100%, 100%);
+    background-color: $color-bloqueo-1;
+    position: fixed;
+    display: none;
+    opacity: 0;    
+}
+
 // Estilos y clases para el navbar general de todas las apps
 .caja-presentacion{
     display: flex;
@@ -53,12 +62,12 @@
         @include width-height(30px, 30px)
     }
 }
-
-// Estilos y clases para el sidebar principal de todas las clases
+//Estilo para el contenedor principal
 .caja-contenido{
-    display: flex;
+    display: flex
 }
 
+// Estilos y clases para el sidebar principal de todas las clases
 .sidebar-principal{
     @include width-height(0,100%);
     background-color: $color-sidebar-1;
@@ -67,6 +76,7 @@
     overflow: hidden;
     z-index: 1;
     right: 0;
+    top: 0;
 }
 
 .btn-sidebar{

@@ -1,0 +1,41 @@
+@use 'fonts';
+@use 'colors';
+
+// Estilos para la vista inicio ofertas laborales
+.contenedor{
+    display: flex;
+    padding: 20px;
+}
+// Estilos para el aside y la navegacion
+.aside-ofertaslab{
+    display: inline-block;
+}
+
+.sidebar-ofertaslab{
+    background-color: $color-general-3;
+    border: 1px solid $color-border-1;
+    display: grid;
+    margin-bottom: 100px;
+}
+
+.sidebar-title{
+    padding: .5em 2.5em;
+    border-bottom: 1px solid $color-border-1;
+}
+
+.list-items{
+    margin: .5em;
+    li, a{
+        font-size: 15px;
+        color: $color-texto-3;
+        :hover{
+            font-weight: bold;
+        }
+    }
+    li{
+        margin: .6em 1.5em; 
+    }
+}
+
+.contenido-ofertaslab{
+}
