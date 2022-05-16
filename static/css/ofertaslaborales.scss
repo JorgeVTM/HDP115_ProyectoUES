@@ -11,14 +11,14 @@
 // Estilos para el aside y el sidebar
 .aside-ofertaslab{
     display: inline-block;
-    margin-right: 20px;
-}
+    margin-right: 20px;}
 
 .sidebar-ofertaslab{
     background-color: $color-general-3;
     border: 1px solid $color-border-1;
     min-width: 250px;
     margin-bottom: 100px;
+    box-shadow: 2px 1px 4px 1px $color-border-1;
 }
 
 .sidebar-title{
@@ -44,6 +44,7 @@
 .navbar-ofertaslab{
     border: 1px solid $color-border-1;
     background-color: $color-general-3;
+    box-shadow: 2px 1px 4px 1px $color-border-1;
     padding: 0 20px;
     display: flex;
     height: 38px;
@@ -108,9 +109,10 @@
 }
 
 .tap-ofertalab{
-    @include width-height(430px,160px);
+    @include width-height(440px,160px);
     border: 1px solid $color-border-1;
     background-color: $color-general-3;
+    box-shadow: 2px 1px 4px 1px $color-border-1;
     display: inline-flex;
     align-items: center;
     overflow: hidden;

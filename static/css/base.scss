@@ -29,6 +29,7 @@
     padding: 10px;
     background-color: $color-navbar-1;
     border-bottom: 1px solid $color-border-1;
+    box-shadow: 2px 1px 4px 1px $color-border-1;
 }
 
 .logotema, .navbar, .caja-user{
@@ -91,8 +92,29 @@
     }
 }
 
+.sidebar-presentacion{
+    width: 250px;
+    display: inline-block;
+    text-align: center;
+    div,img,h2{
+        margin-bottom: 10px
+    }
+    div{
+        padding: 10px 0;
+        background-color: $color-navbar-1;
+        color: $color-texto-1;
+        h2{
+            margin: 0;
+        }
+    }   
+    img{
+        @include width-height(100px, 100px);
+        border-radius: 100px;
+    }
+}
+
 .sidebar{
-    border-top: 20px solid $color-navbar-1;
+    border-top: 1px solid $color-border-1;
 }
 
 .sidebar-items{

@@ -55,8 +55,9 @@
                           </svg>Resientes</a>
                     </li>
                 </ul>
-                <form action="" class="formnavbar-ofertaslab">
-                    <input type="text" placeholder="Busquedas...">
+                <form action="" method="post" class="formnavbar-ofertaslab">
+                    {% csrf_token %}
+                    {{form.busqueda}}
                     <button type="submit">Buscar</button>
                 </form>
             </div>
@@ -78,7 +79,8 @@
                             <li>Salario base: ${{oferta.salario_minimo}}</li>
                             <li>Vancantes disponibles: {{oferta.vacantes}}</li>
                         </ul>
-                        <a href="/">Ver oferta</a>
+                        {% comment %} <a href="/">Ver oferta</a> {% endcomment %}
+                        <a href="{% url 'busqueda' oferta.area_de_trabajo %}">Ver oferta</a>
                     </div>  
                 </div>
                 {% endfor %}

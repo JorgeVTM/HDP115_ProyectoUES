@@ -20,7 +20,7 @@
     <header>
         <div class="caja-presentacion">
             <div class="logotema">
-                <h1>Universidad de El Salvador</h1>
+                <a href="{% url 'inicio' %}">Universidad de El Salvador</a>
             </div>
             <nav class="navbar">
                 {% if not user.is_authenticated %}
@@ -53,6 +53,13 @@
                     <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
                   </svg>
             </button>
+            <div class="sidebar-presentacion">
+                <div>
+                    <h2>Universidad de El Salvador</h2>
+                </div>
+                <img src="{% static 'img/user.png' %}" alt="foto de usuario">
+                <h2>{{user.first_name}} {{user.last_name}}</h2>    
+            </div>
             <nav class="sidebar">
                 <ul class="sidebar-items">
                     <li>
