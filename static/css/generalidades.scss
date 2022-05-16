@@ -34,5 +34,9 @@ h3{
 }
 h4{
     @include roboto-lighter;
-    font-size: 13px;
+    font-size: 13.5px;
+}
+p{
+    @include roboto-300;
+    font-size: 13.5px;
 }

@@ -82,8 +82,8 @@ class Sede(models.Model):
     #Metodo mostrar
     def __str__(self):
         
-        texto = "departamento: {0}, ciudad: {1}"
-        return texto.format(self.departamento, self.ciudad)
+        texto = "sede: {0}, departamento: {1}, ciudad: {2}"
+        return texto.format(self.nombre, self.departamento, self.ciudad)
 
 #Modelo para las ofertas laborales
 class OfertaLaboral(models.Model):
