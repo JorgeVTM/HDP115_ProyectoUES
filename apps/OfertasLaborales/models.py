@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from os import system
+from django.db.models import Q
 # Create your models here.
 
 #Modelo usuario persona
@@ -45,7 +46,7 @@ class Perfil(models.Model):
 class Categoria(models.Model):
     
     #Propiedades de la tabla
-    nombre = models.CharField(max_length=100, default=None, null=True)
+    nombre = models.CharField(max_length=100, default=None, unique=True)
 
     def get_nombre(self):
         return self.nombre
@@ -60,7 +61,7 @@ class Categoria(models.Model):
 class Facultad(models.Model):
     
     #Propiedades de la tabla
-    nombre = models.CharField(max_length=100, default=None, null=True)
+    nombre = models.CharField(max_length=100, default=None, unique=True)
 
     def get_nombre(self):
         return self.nombre
@@ -75,7 +76,7 @@ class Facultad(models.Model):
 class Sede(models.Model):
     
     #Propiedades de la tabla
-    nombre = models.CharField(max_length=100, default=None, null=True)
+    nombre = models.CharField(max_length=100, default=None, unique=True)
     ciudad = models.CharField(max_length=100, default=None, null=True)
     departamento = models.CharField(max_length=100, default=None, null=True)
     

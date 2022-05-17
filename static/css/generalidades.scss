@@ -40,3 +40,7 @@ p{
     @include roboto-300;
     font-size: 13.5px;
 }
+span{
+    @include roboto-normal;
+    font-size: 15px;
+}

@@ -39,7 +39,11 @@
 }
 
 .logotema{
-    h1{color: $color-texto-1;}
+    a{
+        @include roboto-bold;
+        color: $color-texto-1; 
+        font-size: 22px;
+    }
 }
 
 .navbar{

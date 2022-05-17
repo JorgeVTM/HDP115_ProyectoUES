@@ -1,3 +1,5 @@
+from os import system
+from django.db.models import Count
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, TemplateView, DetailView
 from django.views.generic.list import MultipleObjectMixin
@@ -24,36 +26,39 @@ class Inicio(ListView, MultipleObjectMixin):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        nombres = ('ofertaslaborales', 'categorias', 'facultades', 'sedes')
-        index = 0
-        for objeto in self.object_list:
-            context[nombres[index]] = objeto.objects.all()
-            index +=1
+        context['ofertaslaborales'] = OfertaLaboral.objects.all()
+        context['resultados'] = OfertaLaboral.objects.count()
+        context['categorias'] = Categoria.objects.annotate(Count('ofertalaboral'))
+        context['facultades'] = Facultad.objects.annotate(Count('ofertalaboral'))
+        context['sedes'] = Sede.objects.annotate(Count('ofertalaboral'))
         return context
-    
+
 class Busqueda(ListView, MultipleObjectMixin):
     
     template_name = 'OfertasLaborales/inicio.html'
-    object_list= (OfertaLaboral, Categoria, Facultad, Sede)
+    object_list= (Categoria, Facultad, Sede)
     
     def get(self, request, busqueda):
-        print(busqueda)
+        
+        context = self.get_context_data(busqueda)
+        return render(request, self.template_name,context)
 
-        context = self.get_context_data(form = BusquedaForm())
-        context['ofertaslaborales'] = self.get_queryset(busqueda)
-        return render(request, self.template_name, context)
-    
-    def post(self, request, busqueda):
-        form = BusquedaForm(request.POST)
-        if form.is_valid():
-            busqueda = form.cleaned_data['busqueda']
-        return redirect('busqueda', busqueda)
-    
-    def get_queryset(self, busqueda):
-        ofertaslaborales = OfertaLaboral.objects.filter(area_de_trabajo__contains=busqueda)
-        return ofertaslaborales
+    def get_context_data(self, busqueda, **kwargs):
+        context = super().get_context_data(**kwargs)
 
+        for objeto in self.object_list:
+            resultado = self.get_queryset(busqueda, objeto)
+            if resultado is not None:
+                context['ofertaslaborales'] = resultado
+                context['resultados'] = resultado.count()
+
+                return context
+              
+        return context
     
-#Para buscar LIKE contiene una palabra o caracter...
- # context['ofertaslaborales'] = OfertaLaboral.objects.filter(area_de_trabajo__contains='Limpieza')
-# print(OfertaLaboral.objects.filter(area_de_trabajo__contains='Limpieza'))
+    def get_queryset(self, busqueda, objeto):
+        try:
+            resultado = objeto.objects.get(nombre=busqueda).ofertalaboral_set.all()
+        except objeto.DoesNotExist:
+            resultado = None
+        return resultado
