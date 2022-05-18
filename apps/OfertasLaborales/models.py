@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from os import system
-from django.db.models import Q
 # Create your models here.
 
 #Modelo usuario persona
@@ -53,7 +52,6 @@ class Categoria(models.Model):
     
     #Metodo mostrar
     def __str__(self):
-        
         texto = "nombre: {0}"
         return texto.format(self.get_nombre())
 
@@ -68,7 +66,6 @@ class Facultad(models.Model):
     
     #Metodo mostrar
     def __str__(self):
-        
         texto = "nombre: {0}"
         return texto.format(self.get_nombre())
 
