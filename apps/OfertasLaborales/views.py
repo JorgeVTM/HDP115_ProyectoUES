@@ -13,8 +13,10 @@ class Inicio(ListView, MultipleObjectMixin):
     
     template_name = 'OfertasLaborales/inicio.html'
     object_list= (Categoria, Facultad, Sede)
+    guardados = {}  
     
     def get(self, request):
+        self.guardados.clear()
         context = self.get_context_data(form=BusquedaForm())
         return render(request, self.template_name, context)
     
@@ -33,60 +35,76 @@ class Inicio(ListView, MultipleObjectMixin):
             context[objeto.__name__] = objeto.objects.annotate(Count('ofertalaboral'))
         return context
     
+    def filtros(self, objeto, **kwargs):
+        filtro = {}
+        for key,value in kwargs.items():
+            filtro[key] = value
+        return objeto.objects.filter(**filtro) 
+    
 class Seach(Inicio):
      
     def get(self, request, busqueda):
         context = self.get_context_data(busqueda, form=BusquedaForm())
         return render(request, self.template_name, context)
     
-    def get_queryset(self, busqueda):
-        resultado = OfertaLaboral.objects.filter(area_de_trabajo__icontains=busqueda)
-        return resultado
-    
     def post(self, request, busqueda):
-        context = self.get_context_data(busqueda, form=BusquedaForm(request.POST))
-        print(busqueda)
-        return self.get(request,busqueda)
+        form = BusquedaForm(request.POST)
+        if form.is_valid():
+            busqueda = form.cleaned_data['busqueda']
+        return redirect('buscar', busqueda)
 
     def get_context_data(self, busqueda, **kwargs):
         context = super().get_context_data(**kwargs)
         ofertas = self.get_queryset(busqueda)
         context["ofertaslaborales"] = ofertas
-        context['resultados'] = ofertas.count()
         return context
     
-       
-class FiltroSeach(Inicio):
-            
-    def get(self, request, filtro):
-        context = self.get_context_data(filtro, form=BusquedaForm())
-         
+    def get_queryset(self, busqueda):
+        resultado = OfertaLaboral.objects.filter(area_de_trabajo__icontains=busqueda)
+        return resultado
+        
+class Categorias(Inicio):
+    
+    
+    def get(self, request, busqueda):
+        context = self.get_context_data(busqueda, form=BusquedaForm())    
         return render(request, self.template_name, context)
-    
-    def post(self, request, filtro):
-        form = BusquedaForm(request.POST)
-        if form.is_valid():
-            busqueda = form.cleaned_data['busqueda']
-        return redirect('buscar', busqueda)
-    
-    def get_context_data(self, filtro, **kwargs):
+       
+    def get_context_data(self, busqueda, **kwargs):
         context = super().get_context_data(**kwargs)
         
-        ofertas = self.get_queryset(filtro)
-        context['ofertaslaborales'] = ofertas
-        context['resultados'] = ofertas.count()
-        context['filtro'] = filtro
+        self.guardados['categoria__nombre'] = busqueda
+
         
-        for objeto in self.object_list:
-            context[objeto.__name__] = objeto.objects.annotate(Count('ofertalaboral')).exclude(nombre=filtro)
-            
+        context['ofertaslaborales'] = self.filtros(OfertaLaboral,**self.guardados)
+
         return context
-                                                       
-    def get_queryset(self, busqueda):
-        for objeto in self.object_list:
-            try: 
-                resultado = objeto.objects.get(nombre=busqueda).ofertalaboral_set.all()
-                return resultado
-            except objeto.DoesNotExist:
-                resultado = None
-        return resultado
+           
+class Facultades(Inicio):
+    
+    def get(self, request, busqueda):
+        context = self.get_context_data(busqueda, form=BusquedaForm())    
+        return render(request, self.template_name, context)
+
+    def get_context_data(self, busqueda, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        self.guardados['facultad__nombre'] = busqueda
+        print(self.guardados)
+        context['ofertaslaborales'] = self.filtros(OfertaLaboral,**self.guardados)
+
+        return context
+
+class Sedes(Inicio):
+    
+    def get(self, request, busqueda):
+        context = self.get_context_data(busqueda, form=BusquedaForm())    
+        return render(request, self.template_name, context)
+
+    def get_context_data(self, busqueda, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        self.guardados['sede__nombre'] = busqueda
+        context['ofertaslaborales'] = self.filtros(OfertaLaboral,**self.guardados)
+
+        return context
