@@ -81,28 +81,13 @@
     align-items: center;
     margin-left: auto;
 
-    ul,form{
+    form{
         margin: 0 5px;   
         display: flex; 
     }
-
-    svg,a{
-        padding: 0 4px;
-    }
-
-    a{
-        display: flex;
-        align-items: center;
-        font-size: 15px;
-        color: $color-texto-2;
-    }  
-        
-    a:hover{
-        color: $color-hover-3;
-    }
 }
 
-.formnavbar-ofertaslab{
+.form-seach{
     border: 1px solid $color-border-1;
     
     input,button{

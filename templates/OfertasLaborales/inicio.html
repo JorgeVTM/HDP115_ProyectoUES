@@ -8,24 +8,24 @@
     <aside class="aside-ofertaslab">
         <nav class="sidebar-ofertaslab">  
             <div class="sidebar-title">
-                <h3>Mostrar resultador por: {{filtro}}</h3>
+                <h3>Lista de resultados</h3>
             </div>      
             <ul class="list-items">
                 <h3>Categorias:</h3>
                 {% for categoria in Categoria %}
-                <li><a href="{% url 'categorias' categoria.nombre %}">{{categoria.nombre}} <span>{{categoria.ofertalaboral__count}}</span></a></li>
+                <li><a href="{% url 'busqueda' categoria.nombre %}">{{categoria.nombre}} <span>{{categoria.ofertalaboral__count}}</span></a></li>
                 {% endfor %}
             </ul>
             <ul class="list-items">
                 <h3>Facultades:</h3>
                 {% for facultad in Facultad %}
-                <li><a href="{% url 'facultades' facultad.nombre %}">{{facultad.nombre}} <span>{{facultad.ofertalaboral__count}}</span></a></li>
+                <li><a href="{% url 'busqueda' facultad.nombre %}">{{facultad.nombre}} <span>{{facultad.ofertalaboral__count}}</span></a></li>
                 {% endfor %}
             </ul>
             <ul class="list-items">
                 <h3>Sedes:</h3>
                 {% for sede in Sede %}
-                <li><a href="{% url 'sedes' sede.nombre %}">{{sede.nombre}} <span>{{sede.ofertalaboral__count}}</span></a></li>
+                <li><a href="{% url 'busqueda' sede.nombre %}">{{sede.nombre}} <span>{{sede.ofertalaboral__count}}</span></a></li>
                 {% endfor %}
             </ul>
         </nav>
@@ -38,24 +38,10 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
                   <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zm1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0zM1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5z"/>
                 </svg>
-                <h3>Ofertas laborales:<span>{{ofertaslaborales.count}} resultados</span></h3>
+                <h3>Ofertas laborales:<span>{{filtro}} {{ofertaslaborales.count}} resultados</span></h3>
             </strong>
             <div class="navbar-ofertaslab-items">
-                <ul>
-                    <li>
-                        <a href="/"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-alpha-down" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351z"/>
-                            <path d="M12.96 14H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V14zM4.5 2.5a.5.5 0 0 0-1 0v9.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L4.5 12.293V2.5z"/>
-                          </svg>Ultimos</a>
-                    </li>
-                    <li>
-                        <a href="/"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sort-alpha-up" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351z"/>
-                            <path d="M12.96 14H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V14zm-8.46-.5a.5.5 0 0 1-1 0V3.707L2.354 4.854a.5.5 0 1 1-.708-.708l2-1.999.007-.007a.498.498 0 0 1 .7.006l2 2a.5.5 0 1 1-.707.708L4.5 3.707V13.5z"/>
-                          </svg>Resientes</a>
-                    </li>
-                </ul>
-                <form action="" method="post" class="formnavbar-ofertaslab">
+                <form action="" method="post" class="form-seach">
                     {% csrf_token %}
                     {{form.busqueda}}
                     <button type="submit">Buscar</button>
@@ -78,8 +64,9 @@
                             <li>Nivel de experiencia ideal: {{oferta.nivel_experiencia}}</li>
                             <li>Salario base: ${{oferta.salario_minimo}}</li>
                             <li>Vancantes disponibles: {{oferta.vacantes}}</li>
+                            <li>{{oferta.sede.nombre}} {{oferta.sede.ciudad}} {{oferta.sede.departamento}}</li>
                         </ul>
-                        {% comment %} <a href="{% url 'busqueda' oferta.area_de_trabajo %}">Ver oferta</a> {% endcomment %}
+                        <a href="{% url 'busqueda' oferta.area_de_trabajo %}">Ver oferta</a>
                     </div>  
                 </div>
                 {% endfor %}
