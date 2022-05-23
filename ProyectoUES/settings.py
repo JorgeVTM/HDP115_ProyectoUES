@@ -130,7 +130,7 @@ STATICFILES_DIRS = [
 
 # Configuración de URL
 LOGIN_REDIRECT_URL = 'inicio'
-LOGIN_URL = 'login'
+LOGIN_URL = 'iniciarsesion'
 
 # COMPRESS_ROOT =  BASE_DIR / 'staticfiles'
 

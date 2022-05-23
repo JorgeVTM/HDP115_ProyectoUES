@@ -66,6 +66,9 @@
     svg{
         @include width-height(30px, 30px)
     }
+    svg:hover{
+        cursor: pointer;
+    }
 }
 //Estilo para el contenedor principal
 .caja-contenido{

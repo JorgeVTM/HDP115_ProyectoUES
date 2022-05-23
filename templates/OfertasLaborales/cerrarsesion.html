@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load compress %}
+{% load static %}
+
+{% block items-navbar %}
+<ul>
+    <li><a href="{% url 'inicio' %}">Regresar a inicio</a></li>
+</ul>
+{% endblock items-navbar %}
+
+{% block contenido %}
+<div class="contenedor-form">
+    <div>
+        <h2>Gracias por usar nuestra plataforma. Hasta luego!!!</h2>
+    </div>    
+</div>
+{% endblock contenido %}

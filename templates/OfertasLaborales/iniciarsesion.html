@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load compress %}
+{% load static %}
+
+{% block contenido %}
+<div class="contenedor-form">
+    <div>
+        <form action="" class="form" method="post">
+            {% csrf_token %}
+            <h1>Iniciar cuenta de usuario</h1>
+            {{form}}
+            <button>Iniciar Sesión</button>
+            <a href="/">ó crear una nueva cuenta de usuario</a>
+        </form>
+    </div>    
+</div>
+{% endblock contenido %}

@@ -140,3 +140,63 @@
         color: $color-texto-3;
     }
 }
+
+//Estilos para las vistas iniciar y registrar cuenta de usuario.
+.contenedor-form, .form{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 40px;
+}
+
+.form{
+    display: grid;
+    justify-items: center;
+    background-color: $color-general-3;
+    border: 1px solid $color-border-1;
+    box-shadow: 2px 1px 4px 1px $color-border-1;
+    box-sizing: border-box;
+    width: 450px;
+
+    h1{
+        margin-bottom: 30px;
+        font-weight: normal;
+    }
+    label,input,button,a{
+        margin-bottom: 16px;
+        font-size: 15px;
+    }
+    label, input{
+        margin-right: auto;
+    }
+    input{
+        border: 1px solid $color-border-1;
+        box-sizing: border-box;
+        padding: 0 10px;
+        height: 30px;
+        min-width: 320px;
+        width: 100%;
+    }
+    button{
+        background-color: $color-btn-2;
+        font-weight: bold;
+        margin-top: 20px;
+        width: 200px;
+        height: 30px;
+    }
+    button:hover{
+        color: $color-hover-4;
+    }
+    a{
+        color: $color-texto-3;
+    }
+}
+
+.errorlist{
+    padding: 10px;
+    margin-bottom: 16px;
+    background-color: $color-general-6;
+    box-shadow: 2px 1px 4px 1px $color-border-2;
+    color: $color-texto-6;
+    @include roboto-400;
+}

@@ -28,7 +28,7 @@ h2,a{
     @include roboto-normal;
     font-size: 18px;
 }
-h3{
+h3,span,label,button{
     @include roboto-normal;
     font-size: 15px;
 }
@@ -40,7 +40,6 @@ p{
     @include roboto-300;
     font-size: 13.5px;
 }
-span{
-    @include roboto-normal;
-    font-size: 15px;
+button:hover{
+    cursor: pointer;
 }
