@@ -20,6 +20,8 @@ class Inicio(ListView, MultipleObjectMixin):
 
     def post(self, request):
         form = BusquedaForm(request.POST)
+        context = self.get_context_data(form=BusquedaForm())
+        
         if form.is_valid():
             busqueda = form.cleaned_data['busqueda']
             context = self.get_context_data(form=BusquedaForm({'busqueda':busqueda}))
@@ -43,6 +45,8 @@ class Busqueda(Inicio):
     
     def post(self, request, busqueda):
         form = BusquedaForm(request.POST)
+        context = self.get_context_data(busqueda, form=BusquedaForm())
+        
         if form.is_valid():
             dato = form.cleaned_data['busqueda']
             context = self.get_context_data(busqueda, form=BusquedaForm({'busqueda':dato}))
