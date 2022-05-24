@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth import login, authenticate
 from os import system
 # Create your models here.
 

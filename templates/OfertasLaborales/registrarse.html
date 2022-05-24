@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load compress %}
+{% load static %}
+
+{% block contenido %}
+<div class="contenedor-form">
+    <div>
+        <form action="" class="form" method="post">
+            {% csrf_token %}
+            <h1>Crear nueva cuenta de usuario</h1>
+            {% for field in form %}
+                {{ field.errors }}
+                {{ field.label_tag }} {{ field }}
+            {% endfor %}
+            <button>Crear cuenta de usuario</button>
+            <a href="{% url 'iniciarsesion' %}">¿Ya tienes cuenta? Iniciar sesión</a>
+        </form>
+    </div>    
+</div>
+{% endblock contenido %}

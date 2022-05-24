@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load compress %}
+{% load static %}
+
+{% comment %} {% block items-navbar %}
+{% endblock items-navbar %} {% endcomment %}
+
+{% block contenido %}
+<div class="contenedor-form">
+    <div>
+        <form action="" class="form-perfil" method="post">
+            {% csrf_token %}
+            <h1>Datos de cuenta</h1>
+            {% for field in formUsuario %}
+                {{ field.label_tag }} {{ field }}
+            {% endfor %}
+            <div>
+                <a href="/">Cambiar contraseña</a>
+                <button>Actualizar datos</button>    
+            </div>
+        </form>
+        <form action="" class="form-perfil" method="post">
+            {% csrf_token %}
+            <h1>Datos personales</h1>
+            {% for field in formPersona %}
+                {{ field.label_tag }} {{ field }}
+            {% endfor %}
+            <div><button>Actualizar datos</button></div>
+        </form>
+        <form action="" class="form-perfil" method="post">
+            {% csrf_token %}
+            <h1>Perfil laboral</h1>
+            {% for field in formPerfil %}
+                {{ field.label_tag }} {{ field }}
+            {% endfor %}
+            <div><button>Actualizar datos</button></div>
+        </form>
+    </div>    
+</div>
+{% endblock contenido %}

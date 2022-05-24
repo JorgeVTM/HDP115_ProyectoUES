@@ -1,6 +1,5 @@
 // Estilos importados
-@use 'fonts';
-@use 'colors';
+@use 'fonts-colors';
 
 // Estilos generales
 @mixin width-height($width: initial, $height: initial) {
@@ -29,7 +28,6 @@
     padding: 10px;
     background-color: $color-navbar-1;
     border-bottom: 1px solid $color-border-1;
-    box-shadow: 2px 1px 4px 1px $color-border-1;
 }
 
 .logotema, .navbar, .caja-user{
@@ -54,6 +52,7 @@
     a{
         margin: 12px;
         color: $color-texto-1;
+        font-size: 15px;
     }
 }
 

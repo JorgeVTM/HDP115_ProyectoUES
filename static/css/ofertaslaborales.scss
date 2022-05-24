@@ -1,5 +1,4 @@
-@use 'fonts';
-@use 'colors';
+@use 'fonts-colors';
 @use 'base';
 
 // Estilos para la vista inicio ofertas laborales
@@ -16,9 +15,10 @@
 .sidebar-ofertaslab{
     background-color: $color-general-3;
     border: 1px solid $color-border-1;
+    border-radius: 4px;
     min-width: 270px;
     margin-bottom: 100px;
-    box-shadow: 2px 1px 4px 1px $color-border-1;
+    
 }
 
 .sidebar-title{
@@ -31,7 +31,6 @@
     margin: 10px;
     a,span{
         border-radius: 10px;
-        font-size: 15px;
     }
     a{
         padding: 4px;
@@ -56,7 +55,6 @@
 .navbar-ofertaslab{
     border: 1px solid $color-border-1;
     background-color: $color-general-3;
-    box-shadow: 2px 1px 4px 1px $color-border-1;
     padding: 0 20px;
     display: flex;
     height: 38px;
@@ -113,7 +111,6 @@
     @include width-height(430px,160px);
     border: 1px solid $color-border-1;
     background-color: $color-general-3;
-    box-shadow: 2px 1px 4px 1px $color-border-1;
     display: inline-flex;
     align-items: center;
     overflow: hidden;
@@ -133,10 +130,8 @@
     display: grid;
     li{
         @include roboto-300;
-        font-size: 13.5px;
     }
     a{
-        font-size: 15px;
         color: $color-texto-3;
     }
 }
@@ -149,12 +144,19 @@
     padding: 40px;
 }
 
+.errorlist{
+    padding: 10px;
+    margin-bottom: 16px;
+    background-color: $color-general-6;
+    color: $color-texto-6;
+    @include roboto-400;
+}
+
 .form{
     display: grid;
     justify-items: center;
-    background-color: $color-general-3;
+    background: $color-general-3;
     border: 1px solid $color-border-1;
-    box-shadow: 2px 1px 4px 1px $color-border-1;
     box-sizing: border-box;
     width: 450px;
 
@@ -192,11 +194,33 @@
     }
 }
 
-.errorlist{
-    padding: 10px;
-    margin-bottom: 16px;
-    background-color: $color-general-6;
-    box-shadow: 2px 1px 4px 1px $color-border-2;
-    color: $color-texto-6;
-    @include roboto-400;
+//Estilos para la vista de perfil de usuario
+.form-perfil{
+    @extend .form;
+    width: 800px;
+    margin-bottom: 40px;
+    input{
+        min-width: 720px;
+    }
+    div{
+        display: inline-flex;
+        a{
+            @extend button;
+        }
+    } 
+    button,a{
+        margin: 20px 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $color-texto-1;
+        background-color: $color-btn-3;
+    }
+    select, textarea{
+        @extend input;
+        background-color: $color-general-3;
+    }
+    textarea{
+        min-height: 250px;
+    }
 }

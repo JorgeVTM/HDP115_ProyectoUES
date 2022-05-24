@@ -1,6 +1,5 @@
-//Fuentas a utilizar
-@use 'fonts';
-@use 'colors';
+//Fuentas y colores a utilizar
+@use 'fonts-colors';
 
 *{
     padding: 0;
@@ -22,24 +21,21 @@ ul,li,a,p{
 
 h1{
     @include roboto-bold;
-    font-size: 22px;
+    font-size: 20px;
 }
-h2,a{
+h2{
     @include roboto-normal;
-    font-size: 18px;
+    font-size: 16.5px;
 }
-h3,span,label,button{
+h3,span,label,button,li,a{
     @include roboto-normal;
-    font-size: 15px;
+    font-size: 13.5px;
 }
-h4{
+h4,p{
     @include roboto-lighter;
-    font-size: 13.5px;
+    font-size: 12px;
 }
-p{
-    @include roboto-300;
-    font-size: 13.5px;
-}
+
 button:hover{
     cursor: pointer;
 }
