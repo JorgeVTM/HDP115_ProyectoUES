@@ -25,6 +25,9 @@ class Inicio(ListView):
     object_list= (Categoria, Facultad, Sede)
     
     def get(self, request):
+        user = request.user
+        if user.is_staff:
+            return redirect('administracion')
         context = self.get_context_data(form=BusquedaForm())
         return render(request, self.template_name, context)
 
@@ -82,22 +85,38 @@ class Busqueda(Inicio):
                 query = None
         return query
 
+@method_decorator(decorators, name='post')
 class Solicitud(TemplateView):
     
     model = OfertaLaboral
     template_name = 'OfertasLaborales/solicitudoferta.html'
      
     def get(self, request, idoferta, nombre):
+        user = request.user
+        if user.is_staff:
+            return redirect('administracion')
         context = self.get_context_data(idoferta)   
         return render(request, self.template_name, context)
     
-    def get_context_data(self,idoferta, **kwargs):
+    def get_context_data(self, idoferta, **kwargs):
         context = super().get_context_data(**kwargs)
         context["ofertalaboral"] = self.model.objects.get(pk=idoferta)
+        context["solicitud"] = SolicitudLaboral.objects.all()
         context["categoria"] = Categoria.objects.get(ofertalaboral__pk=idoferta)
         context["facultad"] = Facultad.objects.get(ofertalaboral__pk=idoferta)
         context["sede"] = Sede.objects.get(ofertalaboral__pk=idoferta)
         return context
+    
+    def post(self, request, idoferta, nombre):
+        user = request.user
+        oferta = OfertaLaboral.objects.get(id=idoferta)
+        solicitudlaboral = SolicitudLaboral
+        try:
+            solicitudlaboral = SolicitudLaboral.objects.get(user=user,ofertalaboral=oferta)
+            return redirect('inicio')
+        except solicitudlaboral.DoesNotExist:
+            solicitudlaboral = SolicitudLaboral.objects.create(user=user,ofertalaboral=oferta)
+        return redirect('inicio')
     
     
 class Registrarse(TemplateView):
@@ -216,3 +235,12 @@ class DatoLaboral(TemplateView):
         context['form'] = PerfilForm(perfil['fields'])
         context['title'] = "Información Laboral"
         return context
+
+class Informacion(TemplateView):
+    
+    model = User
+    template_name = 'OfertasLaborales/informacion.html'
+    
+    def get(self, request):
+        context = self.get_context_data()
+        return render(request, self.template_name, context)

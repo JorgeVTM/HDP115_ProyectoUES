@@ -9,9 +9,18 @@
         <form action="" class="form" method="post">
             {% csrf_token %}
             <h1>Iniciar cuenta de usuario</h1>
+            {% if user.is_authenticated %}
+                {% if not user.is_staff %}
+                <label class="errorlist">
+                    Se ha autenticado como <strong>{{user.username}}</strong>, pero no está autorizado a acceder a esta página. ¿Desea autenticarse con una cuenta diferente?
+                </label>
+                {% endif %}
+            {% endif %}
             {{form}}
             <button>Iniciar Sesión</button>
+            {% if not user.is_authenticated %}
             <a href="{% url 'registrarse' %}">ó crear una nueva cuenta de usuario</a>
+            {% endif %}
         </form>
     </div>    
 </div>

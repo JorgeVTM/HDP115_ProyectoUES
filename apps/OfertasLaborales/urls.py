@@ -15,4 +15,5 @@ urlpatterns = [
     path('info-personal/', views.InfoPersonal.as_view(), name='info-personal'),
     path('datos-laboral/', views.DatoLaboral.as_view(), name='datos-laboral'),
     path('cambiar-contraseña/', PasswordChangeView.as_view(template_name='OfertasLaborales/perfilusuario.html'), name='cambiar-contraseña'),
+    path('informacion/', views.Informacion.as_view(), name='informacion'),
 ]

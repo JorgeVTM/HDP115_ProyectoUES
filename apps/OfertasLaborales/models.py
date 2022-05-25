@@ -104,6 +104,17 @@ class OfertaLaboral(models.Model):
     facultad = models.ForeignKey(Facultad, on_delete=models.CASCADE)
     sede = models.ForeignKey(Sede, on_delete=models.CASCADE)
     
-    def __str__(self):
-        texto = 'area: {0}. cargo: {1}. vacante: {2}. salario: {3}.'        
+    def __str__(self):  
+        texto = 'area: {0}. cargo: {1}. vacante: {2}. salario: {3}.'    
         return texto.format(self.area_de_trabajo,self.cargo_solicitado,self.vacantes,self.salario_minimo)
+    
+#Modelo para las solicitudes laborales
+class SolicitudLaboral(models.Model):
+
+    #Relaciones con los modelos
+    ofertalaboral = models.ForeignKey(OfertaLaboral, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        texto = 'oferta laboral: {0}. persona: {1}.'        
+        return texto.format(self.ofertalaboral.area_de_trabajo,self.user.first_name)
