@@ -7,34 +7,65 @@
 {% endblock items-navbar %} {% endcomment %}
 
 {% block contenido %}
-<div class="contenedor-form">
+<aside class="sidebar-perfil">
+    <nav>
+        <ul>
+            <li><a href="{% url 'inicio' %}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                    <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+                </svg>
+                Pagina principal</a>
+            </li>
+            <li><a href="{% url 'perfil-usuario'%}">
+                    <svg width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/></svg>
+                Datos de de cuenta</a>
+            </li>
+            <li><a href="{% url 'info-personal' %}">
+                <svg width="16" height="16" fill="currentColor" class="bi bi-person-video2" viewBox="0 0 16 16">
+                    <path d="M10 9.05a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/>
+                    <path d="M2 1a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2ZM1 3a1 1 0 0 1 1-1h2v2H1V3Zm4 10V2h9a1 1 0 0 1 1 1v9c0 .285-.12.543-.31.725C14.15 11.494 12.822 10 10 10c-3.037 0-4.345 1.73-4.798 3H5Zm-4-2h3v2H2a1 1 0 0 1-1-1v-1Zm3-1H1V8h3v2Zm0-3H1V5h3v2Z"/></svg>
+                Información personal</a>
+            </li>
+            <li><a href="{% url 'datos-laboral' %}">
+                <svg width="16" height="16" fill="currentColor" class="bi bi-briefcase" viewBox="0 0 16 16">
+                    <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zm1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0zM1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5z"/>
+                </svg>
+                Datos laborales</a>
+            </li>
+            <li>
+                <a href="{% url 'cambiar-contraseña' %}">
+                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 485 485">
+                        <path d="M345,175v-72.5C345,45.981,299.019,0,242.5,0S140,45.981,140,102.5V175H70v310h345V175H345z M170,102.5c0-39.977,32.523-72.5,72.5-72.5S315,62.523,315,102.5V175H170V102.5z M385,455H100V205h285V455z"/>
+                        <path d="M227.5,338.047v53.568h30v-53.569c11.814-5.628,20-17.682,20-31.616c0-19.299-15.701-35-35-35c-19.299,0-35,15.701-35,35C207.5,320.365,215.686,332.42,227.5,338.047z"/>
+                    </svg>
+                Seguridad</a>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <a href="/">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                    </svg>Información</a>
+            </li>
+        </ul>
+    </nav>
+</aside>
+<div class="contenedor-form formsperfil">
     <div>
         <form action="" class="form-perfil" method="post">
             {% csrf_token %}
-            <h1>Datos de cuenta</h1>
-            {% for field in formUsuario %}
+            <h1>{{title}}</h1>
+            {% for field in form %}
                 {{ field.label_tag }} {{ field }}
+                
             {% endfor %}
             <div>
-                <a href="/">Cambiar contraseña</a>
                 <button>Actualizar datos</button>    
             </div>
-        </form>
-        <form action="" class="form-perfil" method="post">
-            {% csrf_token %}
-            <h1>Datos personales</h1>
-            {% for field in formPersona %}
-                {{ field.label_tag }} {{ field }}
-            {% endfor %}
-            <div><button>Actualizar datos</button></div>
-        </form>
-        <form action="" class="form-perfil" method="post">
-            {% csrf_token %}
-            <h1>Perfil laboral</h1>
-            {% for field in formPerfil %}
-                {{ field.label_tag }} {{ field }}
-            {% endfor %}
-            <div><button>Actualizar datos</button></div>
         </form>
     </div>    
 </div>

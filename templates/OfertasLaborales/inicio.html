@@ -8,22 +8,22 @@
     <aside class="aside-ofertaslab">
         <nav class="sidebar-ofertaslab">  
             <div class="sidebar-title">
-                <h3>Lista de resultados</h3>
+                <h2>Lista de resultados</h2>
             </div>      
             <ul class="list-items">
-                <h3>Categorias:</h3>
+                <h2>Categorias:</h2>
                 {% for categoria in Categoria %}
                 <li><a href="{% url 'busqueda' categoria.nombre %}">{{categoria.nombre}} <span>{{categoria.ofertalaboral__count}}</span></a></li>
                 {% endfor %}
             </ul>
             <ul class="list-items">
-                <h3>Facultades:</h3>
+                <h2>Facultades:</h2>
                 {% for facultad in Facultad %}
                 <li><a href="{% url 'busqueda' facultad.nombre %}">{{facultad.nombre}} <span>{{facultad.ofertalaboral__count}}</span></a></li>
                 {% endfor %}
             </ul>
             <ul class="list-items">
-                <h3>Sedes:</h3>
+                <h2>Sedes:</h2>
                 {% for sede in Sede %}
                 <li><a href="{% url 'busqueda' sede.nombre %}">{{sede.nombre}} <span>{{sede.ofertalaboral__count}}</span></a></li>
                 {% endfor %}
@@ -76,4 +76,5 @@
     </section>
 </div>
 {% endblock contenido %}
+
 

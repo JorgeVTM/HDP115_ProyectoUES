@@ -6,6 +6,9 @@
     margin: 0;
     border: 0;
 }
+html,body{
+    height: 100%;
+}
 body{
     background-color: $color-general-fondo-1;
     font-size: 1em;
@@ -23,17 +26,21 @@ h1{
     @include roboto-bold;
     font-size: 20px;
 }
-h2{
+h2,a{
     @include roboto-normal;
     font-size: 16.5px;
 }
-h3,span,label,button,li,a{
-    @include roboto-normal;
-    font-size: 13.5px;
+h3{
+    @include roboto-400;
+    font-size: 14px
 }
 h4,p{
     @include roboto-lighter;
     font-size: 12px;
+}
+span,label,button,li{
+    @include roboto-400;
+    font-size: 13.5px;
 }
 
 button:hover{
