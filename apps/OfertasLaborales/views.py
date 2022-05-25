@@ -18,9 +18,10 @@ decorators = [never_cache, login_required, csrf_protect]
 
 # Create your views here.
 
-class Inicio(ListView, MultipleObjectMixin):
+class Inicio(ListView):
     
     template_name = 'OfertasLaborales/inicio.html'
+    model = OfertaLaboral
     object_list= (Categoria, Facultad, Sede)
     
     def get(self, request):
@@ -79,6 +80,24 @@ class Busqueda(Inicio):
             except objeto.DoesNotExist:
                 query = None
         return query
+
+class Solicitud(TemplateView):
+    
+    model = OfertaLaboral
+    template_name = 'OfertasLaborales/solicitudoferta.html'
+     
+    def get(self, request, idoferta, nombre):
+        context = self.get_context_data(idoferta)   
+        return render(request, self.template_name, context)
+    
+    def get_context_data(self,idoferta, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["ofertalaboral"] = self.model.objects.get(pk=idoferta)
+        context["categoria"] = Categoria.objects.get(ofertalaboral__pk=idoferta)
+        context["facultad"] = Facultad.objects.get(ofertalaboral__pk=idoferta)
+        context["sede"] = Sede.objects.get(ofertalaboral__pk=idoferta)
+        return context
+    
     
 class Registrarse(TemplateView):
     model = User

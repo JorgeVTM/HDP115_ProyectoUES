@@ -32,11 +32,7 @@
     background-color: $color-navbar-1;
 }
 
-.logotema, .navbar, .caja-user{
-    display: inline-flex;
-    align-items: center;
-    padding: 15px;
-}
+.logotema, .navbar, .caja-user{display: inline-flex; align-items: center; padding: 15px;}
 
 .logotema{
     a{
@@ -134,7 +130,7 @@
         }
     }
     li{
-        @include width-height(100%,40px);
+        @include width-height(200px,40px);
         padding-left: 10px
     }
     svg{

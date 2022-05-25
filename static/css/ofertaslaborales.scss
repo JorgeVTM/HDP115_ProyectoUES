@@ -17,7 +17,7 @@
     background-color: $color-general-3;
     border: 1px solid $color-border-1;
     border-radius: 4px;
-    min-width: 270px;
+    min-width: 340px;
     margin-bottom: 100px;
 }
 .sidebar-title{
@@ -108,7 +108,7 @@
 }
 
 .tap-ofertalab{
-    @include width-height(630px,160px);
+    @include width-height(400px,200px);
     border: 1px solid $color-border-1;
     background-color: $color-general-3;
     display: inline-flex;
@@ -134,6 +134,75 @@
     a{
         color: $color-texto-3;
     }
+}
+// Estilos para la ofertalaboral solicitud
+.navbar-ofertasolicitud{
+    border: 0;
+    height: 50px;
+    align-items: center;
+    form{
+        margin-left: auto;
+    }
+    button,a{
+        @include roboto-bold;
+        font-size: 14px;
+        padding: 8px;
+        border-radius: 8px;
+        color: $color-texto-1;
+        background-color: $color-btn-4;
+    }
+    button:hover,a:hover{
+        color: $color-texto-2;
+    }
+}
+.ofertalab-solicitud{
+    display: grid;
+    border: 1px solid $color-border-1;
+    max-width: 1000px;
+    min-width: 1000px;
+    background-color: $color-general-3;
+    h2{
+        background-color: $color-general-8;
+        color: $color-texto-1;
+        padding: 10px;
+    }
+}
+
+.solicitud-items{
+    display: flex;
+}
+
+.categorias,.detalles{
+    display: inline-block;
+    margin-top: 12px;
+    width: 40%;
+    img{
+        @include width-height(120px,120px);
+        display: flex;
+        margin: 20px auto;
+    }  
+    h3,table{
+        margin-bottom: 40px;
+    }
+    td, p{
+        padding: 0 20px;
+    }
+    p{
+        @include roboto-400;
+        color: $color-texto-7;
+        font-size: 14px;
+    }
+    h3{
+        border-bottom: 1px solid $color-border-1;
+        padding: 7px;        
+    }
+}
+.categorias{
+    border-right: 1px solid $color-border-1;
+}
+
+.detalles{
+    width: 60%;
 }
 
 //Estilos para las vistas iniciar y registrar cuenta de usuario.
@@ -224,7 +293,9 @@
         background-color: $color-general-3;
     }
     textarea{
+        max-width: 250px;
         min-height: 250px;
+        padding: 10px;
     }
 }
 

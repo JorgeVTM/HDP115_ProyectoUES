@@ -66,12 +66,11 @@
                             <li>Vancantes disponibles: {{oferta.vacantes}}</li>
                             <li>{{oferta.sede.nombre}} {{oferta.sede.ciudad}} {{oferta.sede.departamento}}</li>
                         </ul>
-                        <a href="{% url 'busqueda' oferta.area_de_trabajo %}">Ver oferta</a>
+                        <a href="{% url 'solicitud' oferta.pk oferta.area_de_trabajo %}">Ver oferta</a>
                     </div>  
                 </div>
                 {% endfor %}
             </div>
-            
         </main>
     </section>
 </div>

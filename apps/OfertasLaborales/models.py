@@ -97,6 +97,7 @@ class OfertaLaboral(models.Model):
     edad_solicitada = models.CharField(max_length=150, default=None, null=True)
     salario_minimo = models.DecimalField(max_digits=10000,decimal_places=2,default=0.00, null=True)
     salario_maximo = models.DecimalField(max_digits=10000,decimal_places=2,default=0.00, null=True)
+    descripcion = models.CharField(max_length=1000, default=None, null=True)
     
     #Relaciones con los modelos
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)

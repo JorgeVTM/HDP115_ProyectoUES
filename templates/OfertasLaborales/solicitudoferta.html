@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load compress %}
+{% load static %}
+
+{% block contenido %}
+<div class='contenedor-form'>
+    <div class="ofertalab-solicitud">
+        <nav class="navbar-ofertaslab navbar-ofertasolicitud">
+            <a href="{% url 'inicio' %}">Volver al listado</a>
+            <form action=""><button>Enviar Solicitud</button></form>
+        </nav>
+        <h2><strong>Oferta Laboral: </strong>{{ofertalaboral.area_de_trabajo}}</h2>
+        <div class="solicitud-items">
+            <div class="categorias">
+                <img src="{% static 'img/oferta.png' %}" alt="img oferta">
+                <h3>ESPECIFICACIONES</h3>
+                <table class="tabladatos">
+                    <tr><td>Categoria:</td><td>{{categoria.nombre}}</td></tr>
+                    <tr><td>Facultad:</td><td>{{facultad.nombre}}</td></tr>
+                    <tr><td>Sede nombre:</td><td>{{sede.nombre}}</td></tr>
+                    <tr><td>Ciudad:</td><td>{{sede.ciudad}}</td></tr>
+                    <tr><td>Departamento:</td><td>{{sede.departamento}}</td></tr>
+                </table>
+            </div>
+            <div class="detalles">
+                <h3>DETALLES DE LA OFERTA</h3>
+                <table class="tabladatos">   
+                    <tr><td>Cargo solicitado:</td><td>{{ofertalaboral.cargo_solicitado}}</td></tr>
+                    <tr><td>Vacantes disponibles:</td><td>{{ofertalaboral.vacantes}}</td></tr>
+                    <tr><td>Tipo de contratación:</td><td>{{ofertalaboral.tipo_contratacion}}</td></tr>
+                    <tr><td>Experiencia laboral solicitada:</td><td>{{ofertalaboral.nivel_experiencia}}</td></tr>
+                    <tr><td>Genero sexual:</td><td>{{ofertalaboral.generos}}</td></tr>
+                    <tr><td>Edad mínima solicitada:</td><td>{{ofertalaboral.edad_solicitada}}</td></tr>
+                    <tr><td>Salario mínimo ofrecido:</td><td>{{ofertalaboral.salario_minimo}}</td></tr>
+                    <tr><td>Salario máximo ofrecido:</td><td>{{ofertalaboral.salario_maximo}}</td></tr>
+                </table>
+                <h3>DESCRIPCIÓN DE LA OFERTA</h3>
+                <p>{{ofertalaboral.descripcion}}</p>
+            </div>    
+        </div>
+    </div>
+</div>
+{% endblock contenido %}

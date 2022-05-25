@@ -30,7 +30,7 @@ h2,a{
     @include roboto-normal;
     font-size: 16.5px;
 }
-h3{
+h3,td,tr{
     @include roboto-400;
     font-size: 14px
 }
