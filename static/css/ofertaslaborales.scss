@@ -24,6 +24,10 @@
     padding: .5em 2.5em;
     text-align: center;
     border-bottom: 1px solid $color-border-1;
+    a{
+        font-size: 14.5px;
+        color: $color-texto-4;
+    }
 }
 
 .list-items{

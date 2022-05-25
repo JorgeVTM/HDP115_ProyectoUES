@@ -68,6 +68,7 @@ class Busqueda(Inicio):
         
         context['ofertaslaborales'] = self.get_queryset(busqueda)
         context['filtro'] = busqueda
+        context['regresar'] = 'Borrar filtros'
         for objeto in self.object_list:
             context[objeto.__name__] = objeto.objects.annotate(Count('ofertalaboral')).exclude(nombre = busqueda)      
         return context
