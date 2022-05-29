@@ -4,5 +4,6 @@ from . import views
 """Escriba las urls de las vistas de su aplicación aqui!!!"""
 
 urlpatterns = [
-    path('administracion/', views.Administracion.as_view(), name='administracion')
+    path('administracion/', views.Administracion.as_view(), name='administracion'),
+    path('administracion/ofertaslaborales/', views.OfertasLaborales.as_view(), name='ofertaslaborales'),
 ]

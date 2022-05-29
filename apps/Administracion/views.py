@@ -14,3 +14,12 @@ class Administracion(TemplateView):
     
     def get(self, request):
         return render(request, self.template_name)
+    
+@method_decorator(permission_required('is_staff'), name='get')
+class OfertasLaborales(TemplateView):
+    
+    template_name = 'Administracion/ofertaslaborales.html'
+    model = User
+    
+    def get(self, request):
+        return render(request, self.template_name)

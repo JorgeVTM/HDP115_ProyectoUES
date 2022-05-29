@@ -4,7 +4,19 @@
 {% load static %}
 
 {% block contenido %}
-<div class="contenedor">
-    <h1>Hola administrador</h1>
+
+<div>
+    <nav class="navegacion-admin">
+        <ul>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="{% url 'ofertaslaborales' %}">Ofertas Laborales</a></li>
+            <li><a href="/">Usuarios</a></li>
+        </ul>
+    </nav>
+    <div class="contenedor-admin">
+        {% block main-administracion %}
+        
+        {% endblock main-administracion %}
+    </div>
 </div>
 {% endblock contenido %}

@@ -1,0 +1,23 @@
+@use 'fonts-colors';
+@use 'base';
+
+.navegacion-admin{
+    @extend .caja-presentacion;
+    background-color: $color-navbar-4;
+    height: 40px;
+    top: 65px;
+    left: 0;
+    ul{
+        display: flex;
+        align-items: center;
+    }
+    li,a{
+        padding: 8px;
+        color: $color-texto-1;
+    }
+}
+
+.contenedor-admin{
+    @extend .contenedor;
+    margin-top: 105px;
+}
