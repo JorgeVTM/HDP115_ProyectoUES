@@ -21,3 +21,36 @@
     @extend .contenedor;
     margin-top: 105px;
 }
+
+.main{
+    width: 100%;
+}
+
+.contenedor-admin-ofertaslab{
+    display: flex;
+}
+
+.navbar-admin-ofertaslab{
+    @extend .caja-presentacion;
+    @extend .navbar;
+    background-color: $color-navbar-4;
+    position: initial;
+    height: 40px;
+}
+
+.sidebar-admin-ofertaslab{
+    @extend .sidebar-perfil;
+    background-color: $color-general-9;
+    position: initial;
+    height: initial;
+    min-width: 20%;
+    border: 0;
+
+    ul{
+        border: 0;
+    }
+}
+
+.main-admin-ofertaslab{
+    background-color: $color-general-3;
+}
