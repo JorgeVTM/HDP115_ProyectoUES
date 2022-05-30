@@ -36,7 +36,9 @@
                     <tr><td>Salario máximo ofrecido:</td><td>{{ofertalaboral.salario_maximo}}</td></tr>
                 </table>
                 <h3>DESCRIPCIÓN DE LA OFERTA</h3>
-                <p>{{ofertalaboral.descripcion}}</p>
+                <div>
+                    {{ ofertalaboral.descripcion|linebreaksbr }}
+                </div>
             </div>    
         </div>
     </div>

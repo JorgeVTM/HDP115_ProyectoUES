@@ -55,6 +55,7 @@
     </nav>
 </aside>
 <div class="contenedor contenedor-form formsperfil">
+    {% block contenido-items %}
     <div>
         <form action="" class="form-perfil" method="post">
             {% csrf_token %}
@@ -67,6 +68,7 @@
                 <button>Actualizar datos</button>    
             </div>
         </form>
-    </div>    
+    </div>
+    {% endblock contenido-items %}    
 </div>
 {% endblock contenido %}

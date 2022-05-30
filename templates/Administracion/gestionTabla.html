@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% extends 'Administracion/gestionregistros.html' %}
+{% load compress %}
+{% load static %}
+
+{% block main %}
+<div class="contenedor-tabla">
+    <h2>Tabla de resultados</h2>
+    <table class="">
+        <thead>
+            {% for field in model.values %}
+                {% if forloop.last %}
+                <tr>
+                {% for dato in field.keys %}
+                    {% if forloop.counter <= 9 %}
+                    <th>{{dato}}</th>
+                    {% endif %}
+                {% endfor %}
+                <th>opciones</th>
+                </tr>
+                {% endif %}
+            {% endfor %}
+        </thead>
+        <tbody>
+            {% for field in model.values %}
+                <tr>
+                {% for dato in field.values %}
+                    {% if forloop.counter <= 9 %}
+                    <td>{{dato}}</td>
+                    {% endif %}
+                {% endfor %}
+                <td><a href="/">Editar</a><a href="/">Eliminar</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock main %}

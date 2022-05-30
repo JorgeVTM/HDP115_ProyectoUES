@@ -29,15 +29,16 @@ class Administracion(TemplateView):
 @method_decorator(decorators, name='post')
 class Registros(TemplateView):
     # template_name = 'Administracion/ofertaslaborales.html'
-    def __init__(self, template_name, model, form, title):
+    def __init__(self, template_name, model, form, title, objeto):
+        self.objeto = objeto
         self.title = title
         self.template_name = template_name
         self.model = model
         self.form = form
     
     def get(self, request):
-        context = self.get_context_data(titulo = self.title)
-        context['model'] = self.model.objects.all()
+        context = self.get_context_data(titulo = self.title, objeto = self.objeto)
+        context['model'] = self.model.objects.all().values()
         context['form'] = self.form()
         return render(request, self.template_name, context)
     
@@ -56,60 +57,64 @@ class Registros(TemplateView):
 class OfertasLaborales(Registros):
     
     def __init__(self):
-        template_name = 'Administracion/ofertaslaborales.html'
+        template_name = 'Administracion/gestionregistros.html'
         title = 'Registrar una nueva Oferta Laboral'
+        objeto = 'OfertaLaboral'
         
-        Registros.__init__(self, template_name, OfertaLaboral, OfertasLaboralesForm, title)
+        Registros.__init__(self, template_name, OfertaLaboral, OfertasLaboralesForm, title, objeto)
 
 class OfertasLaboralesAll(Registros):
     
     def __init__(self):
-        template_name = 'Administracion/all/ofertaslaboralesall.html'
-        title = 'Registrar una nueva Oferta Laboral'
-        
-        Registros.__init__(self, template_name, OfertaLaboral, OfertasLaboralesForm, title)
+        template_name = 'Administracion/gestionTabla.html'
+        title = None
+        objeto = 'OfertaLaboral'
+        Registros.__init__(self, template_name, OfertaLaboral, OfertasLaboralesForm, title,objeto)
         
 class Categorias(Registros):
     
     def __init__(self):
-        template_name = 'Administracion/categorias.html'
+        template_name = 'Administracion/gestionregistros.html'
         title = 'Registrar una nueva Categoria'
-        Registros.__init__(self, template_name, Categoria, CategoriaForm, title)
+        objeto = 'Categoria'
+        Registros.__init__(self, template_name, Categoria, CategoriaForm, title, objeto)
 
 class CategoriasAll(Registros):
     
     def __init__(self):
-        template_name = 'Administracion/all/categoriasall.html'
-        title = 'Registrar una nueva Oferta Laboral'
-        
-        Registros.__init__(self, template_name, Categoria, OfertasLaboralesForm, title)
+        template_name = 'Administracion/gestionTabla.html'
+        title = None
+        objeto = 'Categoria'
+        Registros.__init__(self, template_name, Categoria, OfertasLaboralesForm, title, objeto)
 
 class Facultades(Registros):
     
     def __init__(self):
-        template_name = 'Administracion/facultades.html'
+        template_name = 'Administracion/gestionregistros.html'
         title = 'Registrar una nueva Facultad de la Universidad'
-        Registros.__init__(self, template_name, Facultad, FacultadForm, title)
+        objeto = 'Facultad'
+        Registros.__init__(self, template_name, Facultad, FacultadForm, title, objeto)
 
 class FacultadesAll(Registros):
     
     def __init__(self):
-        template_name = 'Administracion/all/facultadesall.html'
-        title = 'Registrar una nueva Oferta Laboral'
-        
-        Registros.__init__(self, template_name, Facultad, OfertasLaboralesForm, title)
+        template_name = 'Administracion/gestionTabla.html'
+        title = None
+        objeto = 'Facultad'
+        Registros.__init__(self, template_name, Facultad, OfertasLaboralesForm, title, objeto)
         
 class Sedes(Registros):
     
     def __init__(self):
-        template_name = 'Administracion/sedes.html'
+        template_name = 'Administracion/gestionregistros.html'
         title = 'Registrar una nueva Sede de la Universidad'
-        Registros.__init__(self, template_name, Sede, SedeForm, title)
+        objeto = 'Sede'
+        Registros.__init__(self, template_name, Sede, SedeForm, title, objeto)
 
 class SedesAll(Registros):
     
     def __init__(self):
-        template_name = 'Administracion/all/sedesall.html'
+        template_name = 'Administracion/gestionTabla.html'
         title = 'Registrar una nueva Oferta Laboral'
-        
-        Registros.__init__(self, template_name, Sede, OfertasLaboralesForm, title)
+        objeto = 'Sede'
+        Registros.__init__(self, template_name, Sede, OfertasLaboralesForm, title, objeto)
