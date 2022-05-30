@@ -1,6 +1,6 @@
 # Ignorar archivos del proyecto en general
 !static/
-static/CACHE/*
+static/CACHE
 ProyectoUES/__pycache__
 
 # Ignorar el cache de la aplicación Administración
@@ -14,3 +14,6 @@ apps/OfertasLaborales/__pycache__
 apps/OfertasLaborales/migrations/__pycache__
 apps/OfertasLaborales/migrations/*.py
 !apps/OfertasLaborales/migrations/__init__.py
+
+# Ignorar el ccs de la vista admin en static
+static/admin
