@@ -2,7 +2,7 @@
 @use 'base';
 
 .navegacion-admin{
-    @extend .caja-presentacion;
+    @extend .caja-presentacion !optional;
     background-color: $color-navbar-4;
     height: 40px;
     top: 65px;
@@ -18,7 +18,7 @@
 }
 
 .contenedor-admin{
-    @extend .contenedor;
+    @extend .contenedor !optional;
     margin-top: 105px;
 }
 
@@ -31,15 +31,15 @@
 }
 
 .navbar-admin-ofertaslab{
-    @extend .caja-presentacion;
-    @extend .navbar;
+    @extend .caja-presentacion !optional;
+    @extend .navbar !optional;
     background-color: $color-navbar-4;
     position: initial;
     height: 40px;
 }
 
 .sidebar-admin-ofertaslab{
-    @extend .sidebar-perfil;
+    @extend .sidebar-perfil !optional;
     background-color: $color-general-9;
     position: initial;
     height: initial;
@@ -61,4 +61,54 @@
 
 .contenedor-tabla{
     overflow: auto;
+}
+
+.tabla-formularios{
+    border: 1px solid $color-border-4;
+    border-collapse: collapse;
+    min-width: 680px;
+    thead{
+        background-color: $color-general-10;
+        border-bottom: 2px solid $color-border-4;
+        color: $color-texto-1;
+    }
+    th, td{
+        text-transform: capitalize;
+        text-align: left;
+        vertical-align: top;
+        border-spacing: 0;
+        border-collapse: collapse;
+    }
+    th{
+        padding: 10px; 
+    }
+    td{
+        border: 1px solid $color-border-4;
+        padding: 4px 10px; 
+    }
+    svg{
+        width: 20px;
+        height: 20px;
+        padding: 4px;
+    }
+}
+
+.btn-table{
+    border-radius: 4px;
+    margin: 0 2px;
+    color: $color-texto-1;
+    box-sizing: border-box;
+    display: inline-flex;
+}
+
+.btn-view-tb{
+    background-color: $color-btn-4;
+}
+
+.btn-update-tb{
+    background-color: $color-btn-6;
+}
+
+.btn-delete-tb{
+    background-color: $color-btn-5;
 }
