@@ -22,10 +22,9 @@ class UsuarioForm(forms.ModelForm):
     class Meta:
         
         model = User   
-        fields = ('username', 'first_name', 'last_name', 'email',)
+        fields = ('first_name', 'last_name', 'email',)
         labels = { 'email': 'Correo electronico'}
         widgets = {
-            'username' : forms.TextInput(attrs={'placeholder': 'Escriba su nombre de usuario...'}),
             'first_name' : forms.TextInput(attrs={'placeholder': 'Escriba su nombre completo...'}),
             'last_name' : forms.TextInput(attrs={'placeholder': 'Escriba su apellido...'}),
             'email' : forms.EmailInput(attrs={'placeholder': 'Escriba su correo electronico...'}),  
@@ -47,6 +46,15 @@ class PersonaForm(forms.ModelForm):
             'dui': forms.TextInput(attrs={'placeholder': 'Escriba su numero unitario de identidad...'}),
             'direccion': forms.TextInput(attrs={'placeholder': 'Escriba su direccion de residencia...'}),
             }
+    
+    def __init__(self, *args, **kwargs):
+        super(PersonaForm, self).__init__(*args, **kwargs)
+        self.fields['fecha_nacimiento'].required = False
+        self.fields['genero'].required = False
+        self.fields['edad'].required = False
+        self.fields['telefono'].required = False
+        self.fields['dui'].required = False
+        self.fields['direccion'].required = False
         
 #formulario para gestionar el perfil de usuario
 class PerfilForm(forms.ModelForm):
