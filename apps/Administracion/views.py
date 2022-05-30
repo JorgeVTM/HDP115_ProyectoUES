@@ -37,6 +37,7 @@ class Registros(TemplateView):
     
     def get(self, request):
         context = self.get_context_data(titulo = self.title)
+        context['model'] = self.model.objects.all()
         context['form'] = self.form()
         return render(request, self.template_name, context)
     
@@ -59,6 +60,14 @@ class OfertasLaborales(Registros):
         title = 'Registrar una nueva Oferta Laboral'
         
         Registros.__init__(self, template_name, OfertaLaboral, OfertasLaboralesForm, title)
+
+class OfertasLaboralesAll(Registros):
+    
+    def __init__(self):
+        template_name = 'Administracion/all/ofertaslaboralesall.html'
+        title = 'Registrar una nueva Oferta Laboral'
+        
+        Registros.__init__(self, template_name, OfertaLaboral, OfertasLaboralesForm, title)
         
 class Categorias(Registros):
     
@@ -67,12 +76,28 @@ class Categorias(Registros):
         title = 'Registrar una nueva Categoria'
         Registros.__init__(self, template_name, Categoria, CategoriaForm, title)
 
+class CategoriasAll(Registros):
+    
+    def __init__(self):
+        template_name = 'Administracion/all/categoriasall.html'
+        title = 'Registrar una nueva Oferta Laboral'
+        
+        Registros.__init__(self, template_name, Categoria, OfertasLaboralesForm, title)
+
 class Facultades(Registros):
     
     def __init__(self):
         template_name = 'Administracion/facultades.html'
         title = 'Registrar una nueva Facultad de la Universidad'
         Registros.__init__(self, template_name, Facultad, FacultadForm, title)
+
+class FacultadesAll(Registros):
+    
+    def __init__(self):
+        template_name = 'Administracion/all/facultadesall.html'
+        title = 'Registrar una nueva Oferta Laboral'
+        
+        Registros.__init__(self, template_name, Facultad, OfertasLaboralesForm, title)
         
 class Sedes(Registros):
     
@@ -80,3 +105,11 @@ class Sedes(Registros):
         template_name = 'Administracion/sedes.html'
         title = 'Registrar una nueva Sede de la Universidad'
         Registros.__init__(self, template_name, Sede, SedeForm, title)
+
+class SedesAll(Registros):
+    
+    def __init__(self):
+        template_name = 'Administracion/all/sedesall.html'
+        title = 'Registrar una nueva Oferta Laboral'
+        
+        Registros.__init__(self, template_name, Sede, OfertasLaboralesForm, title)
