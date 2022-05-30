@@ -46,7 +46,7 @@ class Perfil(models.Model):
 class Categoria(models.Model):
     
     #Propiedades de la tabla
-    nombre = models.CharField(max_length=100, default=None, unique=True)
+    nombre = models.CharField(max_length=100, default=None)
 
     def get_nombre(self):
         return self.nombre
@@ -60,7 +60,7 @@ class Categoria(models.Model):
 class Facultad(models.Model):
     
     #Propiedades de la tabla
-    nombre = models.CharField(max_length=100, default=None, unique=True)
+    nombre = models.CharField(max_length=100, default=None)
 
     def get_nombre(self):
         return self.nombre
@@ -74,7 +74,7 @@ class Facultad(models.Model):
 class Sede(models.Model):
     
     #Propiedades de la tabla
-    nombre = models.CharField(max_length=100, default=None, unique=True)
+    nombre = models.CharField(max_length=100, default=None)
     ciudad = models.CharField(max_length=100, default=None, null=True)
     departamento = models.CharField(max_length=100, default=None, null=True)
     

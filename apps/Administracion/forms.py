@@ -23,6 +23,11 @@ class OfertasLaboralesForm(forms.ModelForm):
             'salario_maximo' : forms.NumberInput(),    
             'descripcion' : forms.Textarea(attrs={'placeholder': 'Escriba la descripción de la oferta laboral...'}),  
         }
+    
+    def __init__(self, *args, **kwargs):
+        super(OfertasLaboralesForm, self).__init__(*args, **kwargs)
+        self.fields['salario_maximo'].required = False
+        self.fields['descripcion'].required = False
         
 #formulario para las categorias
 class CategoriaForm(forms.ModelForm):

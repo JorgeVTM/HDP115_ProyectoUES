@@ -1,3 +1,6 @@
+import json
+from django.core import serializers
+from os import system
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, TemplateView, DetailView
 from django.views.generic.list import MultipleObjectMixin
@@ -53,7 +56,38 @@ class Registros(TemplateView):
             context = self.get_context_data()
             context['form'] = nuevo_form
             return render(request, self.template_name, context)
+
+class RegistroUpdate(Registros):
     
+    def __init__(self, template_name, model, form, title, objeto, url):
+        Registros.__init__(self, template_name, model, form, title, objeto)
+        self.url = url
+        self.pk = None
+    
+    def get(self, request, pk):
+        self.pk = pk
+        context = self.get_context_data(titulo = self.title, objeto = self.objeto)
+        return render(request, self.template_name, context)
+    
+    def post(self, request, pk):
+        #Enviamos los datos del formulario con la instacia objeto modelo
+        objeto = self.model.objects.get(pk=pk)
+        nuevo_form = self.form(request.POST, instance=objeto)
+        # Validación para el formulario con los datos de persona de usuario
+        if nuevo_form.is_valid():
+            nuevo_form.save()
+            return redirect(self.url)
+        else:
+            context = self.get_context_data()
+            context['form'] = nuevo_form
+            return render(request, self.template_name, context)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        objeto = json.loads(serializers.serialize('jsonl',self.model.objects.filter(pk=self.pk)))
+        context['form'] = self.form(objeto['fields'])
+        return context
+        
 class OfertasLaborales(Registros):
     
     def __init__(self):
@@ -69,8 +103,17 @@ class OfertasLaboralesAll(Registros):
         template_name = 'Administracion/gestionTabla.html'
         title = None
         objeto = 'OfertaLaboral'
-        Registros.__init__(self, template_name, OfertaLaboral, OfertasLaboralesForm, title,objeto)
+        Registros.__init__(self, template_name, OfertaLaboral, OfertasLaboralesForm, title, objeto)
         
+class OfertasLaboralesUpdate(RegistroUpdate):
+    
+    def __init__(self):
+        template_name = 'Administracion/gestionregistros.html'
+        title = 'Modificar campos de la Oferta Laboral'
+        objeto = 'OfertaLaboral'
+        url = 'ofertaslaborales_all'
+        RegistroUpdate.__init__(self, template_name, OfertaLaboral, OfertasLaboralesForm, title, objeto, url)
+     
 class Categorias(Registros):
     
     def __init__(self):
@@ -85,7 +128,16 @@ class CategoriasAll(Registros):
         template_name = 'Administracion/gestionTabla.html'
         title = None
         objeto = 'Categoria'
-        Registros.__init__(self, template_name, Categoria, OfertasLaboralesForm, title, objeto)
+        Registros.__init__(self, template_name, Categoria, CategoriaForm, title, objeto)
+        
+class CategoriasUpdate(RegistroUpdate):
+    
+    def __init__(self):
+        template_name = 'Administracion/gestionregistros.html'
+        title = 'Modificar campos de la Categoria'
+        objeto = 'Categoria'
+        url = 'categorias_all'
+        RegistroUpdate.__init__(self, template_name, Categoria, CategoriaForm, title, objeto, url)
 
 class Facultades(Registros):
     
@@ -101,7 +153,16 @@ class FacultadesAll(Registros):
         template_name = 'Administracion/gestionTabla.html'
         title = None
         objeto = 'Facultad'
-        Registros.__init__(self, template_name, Facultad, OfertasLaboralesForm, title, objeto)
+        Registros.__init__(self, template_name, Facultad, FacultadForm, title, objeto)
+
+class FacultadesUpdate(RegistroUpdate):
+    
+    def __init__(self):
+        template_name = 'Administracion/gestionregistros.html'
+        title = 'Modificar campos de la Facultad'
+        objeto = 'Facultad'
+        url = 'facultades_all'
+        RegistroUpdate.__init__(self, template_name, Facultad, FacultadForm, title, objeto, url)
         
 class Sedes(Registros):
     
@@ -117,4 +178,13 @@ class SedesAll(Registros):
         template_name = 'Administracion/gestionTabla.html'
         title = 'Registrar una nueva Oferta Laboral'
         objeto = 'Sede'
-        Registros.__init__(self, template_name, Sede, OfertasLaboralesForm, title, objeto)
+        Registros.__init__(self, template_name, Sede, SedeForm, title, objeto)
+        
+class SedesUpdate(RegistroUpdate):
+    
+    def __init__(self):
+        template_name = 'Administracion/gestionregistros.html'
+        title = 'Modificar campos de la Sede'
+        objeto = 'Sede'
+        url = 'sedes_all'
+        RegistroUpdate.__init__(self, template_name, Sede, SedeForm, title, objeto, url)
