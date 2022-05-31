@@ -1,6 +1,7 @@
 import json
 from django.core import serializers
 from os import system
+from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, TemplateView, DetailView
 from django.views.generic.list import MultipleObjectMixin
@@ -10,6 +11,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
+from django.views.generic.edit import DeleteView
 from apps.OfertasLaborales.models import *
 from apps.OfertasLaborales.forms import *
 from .models import *
@@ -32,12 +34,13 @@ class Administracion(TemplateView):
 @method_decorator(decorators, name='post')
 class Registros(TemplateView):
     # template_name = 'Administracion/ofertaslaborales.html'
-    def __init__(self, template_name, model, form, title, objeto):
+    def __init__(self, template_name, model, form, title, objeto, url):
         self.objeto = objeto
         self.title = title
         self.template_name = template_name
         self.model = model
         self.form = form
+        self.url = url
     
     def get(self, request):
         context = self.get_context_data(titulo = self.title, objeto = self.objeto)
@@ -51,7 +54,7 @@ class Registros(TemplateView):
         # Validación para el formulario con los datos de persona de usuario
         if nuevo_form.is_valid():
             nuevo_form.save()
-            return self.get(request)
+            return redirect(self.url)
         else:
             context = self.get_context_data()
             context['form'] = nuevo_form
@@ -60,8 +63,7 @@ class Registros(TemplateView):
 class RegistroUpdate(Registros):
     
     def __init__(self, template_name, model, form, title, objeto, url):
-        Registros.__init__(self, template_name, model, form, title, objeto)
-        self.url = url
+        Registros.__init__(self, template_name, model, form, title, objeto, url)
         self.pk = None
     
     def get(self, request, pk):
@@ -87,15 +89,29 @@ class RegistroUpdate(Registros):
         objeto = json.loads(serializers.serialize('jsonl',self.model.objects.filter(pk=self.pk)))
         context['form'] = self.form(objeto['fields'])
         return context
+
+class RegistroDelete(DeleteView):
+    
+    def __init__(self, template_name, model, objeto, success_url):
+        self.objeto = objeto
+        self.model = model
+        self.template_name = template_name
+        self.success_url = reverse_lazy(success_url)
         
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["objeto"] = self.objeto
+        return context
+    
 class OfertasLaborales(Registros):
     
     def __init__(self):
         template_name = 'Administracion/gestionregistros.html'
         title = 'Registrar una nueva Oferta Laboral'
         objeto = 'OfertaLaboral'
+        url = 'ofertaslaborales_all'
         
-        Registros.__init__(self, template_name, OfertaLaboral, OfertasLaboralesForm, title, objeto)
+        Registros.__init__(self, template_name, OfertaLaboral, OfertasLaboralesForm, title, objeto, url)
 
 class OfertasLaboralesAll(Registros):
     
@@ -103,7 +119,8 @@ class OfertasLaboralesAll(Registros):
         template_name = 'Administracion/gestionTabla.html'
         title = None
         objeto = 'OfertaLaboral'
-        Registros.__init__(self, template_name, OfertaLaboral, OfertasLaboralesForm, title, objeto)
+        url = 'ofertaslaborales_all'
+        Registros.__init__(self, template_name, OfertaLaboral, OfertasLaboralesForm, title, objeto, url)
         
 class OfertasLaboralesUpdate(RegistroUpdate):
     
@@ -113,6 +130,14 @@ class OfertasLaboralesUpdate(RegistroUpdate):
         objeto = 'OfertaLaboral'
         url = 'ofertaslaborales_all'
         RegistroUpdate.__init__(self, template_name, OfertaLaboral, OfertasLaboralesForm, title, objeto, url)
+        
+class OfertasLaboralesDelete(RegistroDelete):
+    
+    def __init__(self):
+        objeto = 'OfertaLaboral'
+        template_name = 'Administracion/eliminar.html'
+        success_url = 'ofertaslaborales_all'
+        RegistroDelete.__init__(self, template_name, OfertaLaboral, objeto, success_url)
      
 class Categorias(Registros):
     
@@ -120,7 +145,8 @@ class Categorias(Registros):
         template_name = 'Administracion/gestionregistros.html'
         title = 'Registrar una nueva Categoria'
         objeto = 'Categoria'
-        Registros.__init__(self, template_name, Categoria, CategoriaForm, title, objeto)
+        url = 'categorias_all'
+        Registros.__init__(self, template_name, Categoria, CategoriaForm, title, objeto, url)
 
 class CategoriasAll(Registros):
     
@@ -128,7 +154,8 @@ class CategoriasAll(Registros):
         template_name = 'Administracion/gestionTabla.html'
         title = None
         objeto = 'Categoria'
-        Registros.__init__(self, template_name, Categoria, CategoriaForm, title, objeto)
+        url = 'categorias_all'
+        Registros.__init__(self, template_name, Categoria, CategoriaForm, title, objeto, url)
         
 class CategoriasUpdate(RegistroUpdate):
     
@@ -139,13 +166,22 @@ class CategoriasUpdate(RegistroUpdate):
         url = 'categorias_all'
         RegistroUpdate.__init__(self, template_name, Categoria, CategoriaForm, title, objeto, url)
 
+class CategoriasDelete(RegistroDelete):
+    
+    def __init__(self):
+        objeto = 'Categoria'
+        template_name = 'Administracion/eliminar.html'
+        success_url = 'categorias_all'
+        RegistroDelete.__init__(self, template_name, Categoria, objeto, success_url)
+
 class Facultades(Registros):
     
     def __init__(self):
         template_name = 'Administracion/gestionregistros.html'
         title = 'Registrar una nueva Facultad de la Universidad'
         objeto = 'Facultad'
-        Registros.__init__(self, template_name, Facultad, FacultadForm, title, objeto)
+        url = 'facultades_all'
+        Registros.__init__(self, template_name, Facultad, FacultadForm, title, objeto, url)
 
 class FacultadesAll(Registros):
     
@@ -153,7 +189,8 @@ class FacultadesAll(Registros):
         template_name = 'Administracion/gestionTabla.html'
         title = None
         objeto = 'Facultad'
-        Registros.__init__(self, template_name, Facultad, FacultadForm, title, objeto)
+        url = 'facultades_all'
+        Registros.__init__(self, template_name, Facultad, FacultadForm, title, objeto, url)
 
 class FacultadesUpdate(RegistroUpdate):
     
@@ -163,6 +200,14 @@ class FacultadesUpdate(RegistroUpdate):
         objeto = 'Facultad'
         url = 'facultades_all'
         RegistroUpdate.__init__(self, template_name, Facultad, FacultadForm, title, objeto, url)
+
+class FacultadesDelete(RegistroDelete):
+    
+    def __init__(self):
+        objeto = 'Facultad'
+        template_name = 'Administracion/eliminar.html'
+        success_url = 'facultades_all'
+        RegistroDelete.__init__(self, template_name, Facultad, objeto, success_url)
         
 class Sedes(Registros):
     
@@ -170,7 +215,8 @@ class Sedes(Registros):
         template_name = 'Administracion/gestionregistros.html'
         title = 'Registrar una nueva Sede de la Universidad'
         objeto = 'Sede'
-        Registros.__init__(self, template_name, Sede, SedeForm, title, objeto)
+        url = 'sedes_all'
+        Registros.__init__(self, template_name, Sede, SedeForm, title, objeto, url)
 
 class SedesAll(Registros):
     
@@ -178,7 +224,8 @@ class SedesAll(Registros):
         template_name = 'Administracion/gestionTabla.html'
         title = 'Registrar una nueva Oferta Laboral'
         objeto = 'Sede'
-        Registros.__init__(self, template_name, Sede, SedeForm, title, objeto)
+        url = 'sedes_all'
+        Registros.__init__(self, template_name, Sede, SedeForm, title, objeto, url)
         
 class SedesUpdate(RegistroUpdate):
     
@@ -188,3 +235,11 @@ class SedesUpdate(RegistroUpdate):
         objeto = 'Sede'
         url = 'sedes_all'
         RegistroUpdate.__init__(self, template_name, Sede, SedeForm, title, objeto, url)
+
+class SedesDelete(RegistroDelete):
+    
+    def __init__(self):
+        objeto = 'Sede'
+        template_name = 'Administracion/eliminar.html'
+        success_url = 'sedes_all'
+        RegistroDelete.__init__(self, template_name, Sede, objeto, success_url)
