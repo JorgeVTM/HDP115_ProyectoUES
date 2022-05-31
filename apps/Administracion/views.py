@@ -1,24 +1,16 @@
-import json
-from django.core import serializers
 from os import system
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse, resolve
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, TemplateView, DetailView
-from django.views.generic.list import MultipleObjectMixin
 from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_protect
-from django.views.decorators.cache import never_cache
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
-from django.views.generic.edit import DeleteView
+from django.views.generic.edit import *
 from django.db.models import *
 from apps.OfertasLaborales.models import *
 from apps.OfertasLaborales.forms import *
 from .models import *
 from .forms import *
-
-decorators = [never_cache, login_required, csrf_protect]
 
 # Create your views here.
 @method_decorator(permission_required('is_staff'), name='get')
@@ -28,223 +20,158 @@ class Administracion(TemplateView):
     model = User
     
     def get(self, request):
-        return render(request, self.template_name)
+        return render(request, self.template_name)     
     
-@method_decorator(permission_required('is_staff'), name='get')
-@method_decorator(decorators, name='get')
-@method_decorator(decorators, name='post')
-class Registros(TemplateView):
-    # template_name = 'Administracion/ofertaslaborales.html'
-    def __init__(self, template_name, model, form, title, objeto, url):
-        self.objeto = objeto
-        self.title = title
-        self.template_name = template_name
-        self.model = model
-        self.form = form
-        self.url = url
+@method_decorator(permission_required('is_staff'), name='get')  
+class ObjetosAll(ListView):
     
-    def get(self, request):
-        context = self.get_context_data(titulo = self.title, objeto = self.objeto)
-        context['model'] = self.model.objects.all().values()
-        context['form'] = self.form()
-        return render(request, self.template_name, context)
+    template_name = 'Administracion/gestionTabla.html'
+    fields = '__all__'
     
-    def post(self, request):
-        #Enviamos los datos del formulario con la instacia objeto modelo
-        nuevo_form = self.form(request.POST)
-        # Validación para el formulario con los datos de persona de usuario
-        if nuevo_form.is_valid():
-            nuevo_form.save()
-            return redirect(self.url)
-        else:
-            context = self.get_context_data()
-            context['form'] = nuevo_form
-            return render(request, self.template_name, context)
-
-class RegistroUpdate(Registros):
-    
-    def __init__(self, template_name, model, form, title, objeto, url):
-        Registros.__init__(self, template_name, model, form, title, objeto, url)
-        self.pk = None
-    
-    def get(self, request, pk):
-        self.pk = pk
-        context = self.get_context_data(titulo = self.title, objeto = self.objeto)
-        return render(request, self.template_name, context)
-    
-    def post(self, request, pk):
-        #Enviamos los datos del formulario con la instacia objeto modelo
-        objeto = self.model.objects.get(pk=pk)
-        nuevo_form = self.form(request.POST, instance=objeto)
-        # Validación para el formulario con los datos de persona de usuario
-        if nuevo_form.is_valid():
-            nuevo_form.save()
-            return redirect(self.url)
-        else:
-            context = self.get_context_data()
-            context['form'] = nuevo_form
-            return render(request, self.template_name, context)
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        objeto = json.loads(serializers.serialize('jsonl',self.model.objects.filter(pk=self.pk)))
-        context['form'] = self.form(objeto['fields'])
-        return context
-
-class RegistroDelete(DeleteView):
-    
-    def __init__(self, template_name, model, objeto, success_url):
-        self.objeto = objeto
-        self.model = model
-        self.template_name = template_name
-        self.success_url = reverse_lazy(success_url)
-        
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["objeto"] = self.objeto
-        objeto = self.get_object()
-        context["relacionados"] = None
-        if self.objeto == 'Categoria' or self.objeto == 'Facultad' or self.objeto == 'Sede':
-            context["relacionados"] = self.model.objects.get(pk=objeto.pk).ofertalaboral_set.all()
+        context["titulo"] = self.titulo
         return context
-    
-class OfertasLaborales(Registros):
-    
-    def __init__(self):
-        template_name = 'Administracion/gestionregistros.html'
-        title = 'Registrar una nueva Oferta Laboral'
-        objeto = 'OfertaLaboral'
-        url = 'ofertaslaborales_all'
-        
-        Registros.__init__(self, template_name, OfertaLaboral, OfertasLaboralesForm, title, objeto, url)
 
-class OfertasLaboralesAll(Registros):
+@method_decorator(permission_required('is_staff'), name='get')  
+class ObjetoCreate(CreateView):
     
-    def __init__(self):
-        template_name = 'Administracion/gestionTabla.html'
-        title = None
-        objeto = 'OfertaLaboral'
-        url = 'ofertaslaborales_all'
-        Registros.__init__(self, template_name, OfertaLaboral, OfertasLaboralesForm, title, objeto, url)
-        
-class OfertasLaboralesUpdate(RegistroUpdate):
+    template_name = 'Administracion/gestionregistros.html'
+    fields = '__all__'
     
-    def __init__(self):
-        template_name = 'Administracion/gestionregistros.html'
-        title = 'Modificar campos de la Oferta Laboral'
-        objeto = 'OfertaLaboral'
-        url = 'ofertaslaborales_all'
-        RegistroUpdate.__init__(self, template_name, OfertaLaboral, OfertasLaboralesForm, title, objeto, url)
-        
-class OfertasLaboralesDelete(RegistroDelete):
-    
-    def __init__(self):
-        objeto = 'OfertaLaboral'
-        template_name = 'Administracion/eliminarregistros.html'
-        success_url = 'ofertaslaborales_all'
-        RegistroDelete.__init__(self, template_name, OfertaLaboral, objeto, success_url)
-     
-class Categorias(Registros):
-    
-    def __init__(self):
-        template_name = 'Administracion/gestionregistros.html'
-        title = 'Registrar una nueva Categoria'
-        objeto = 'Categoria'
-        url = 'categorias_all'
-        Registros.__init__(self, template_name, Categoria, CategoriaForm, title, objeto, url)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["objeto"] = self.objeto
+        context["titulo"] = self.titulo
+        return context
 
-class CategoriasAll(Registros):
+@method_decorator(permission_required('is_staff'), name='get')
+class ObjetoUpdate(UpdateView):
     
-    def __init__(self):
-        template_name = 'Administracion/gestionTabla.html'
-        title = None
-        objeto = 'Categoria'
-        url = 'categorias_all'
-        Registros.__init__(self, template_name, Categoria, CategoriaForm, title, objeto, url)
-        
-class CategoriasUpdate(RegistroUpdate):
+    template_name = 'Administracion/gestionregistros.html'
+    fields = '__all__'
     
-    def __init__(self):
-        template_name = 'Administracion/gestionregistros.html'
-        title = 'Modificar campos de la Categoria'
-        objeto = 'Categoria'
-        url = 'categorias_all'
-        RegistroUpdate.__init__(self, template_name, Categoria, CategoriaForm, title, objeto, url)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["objeto"] = self.objeto
+        context["titulo"] = self.titulo
+        return context
 
-class CategoriasDelete(RegistroDelete):
+@method_decorator(permission_required('is_staff'), name='get')
+class ObjetoDelete(DeleteView):
     
-    def __init__(self):
-        objeto = 'Categoria'
-        template_name = 'Administracion/eliminarregistros.html'
-        success_url = 'categorias_all'
-        RegistroDelete.__init__(self, template_name, Categoria, objeto, success_url)
+    template_name = 'Administracion/eliminarregistros.html'
+    fields = '__all__'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["objeto"] = self.objeto
+        context["titulo"] = self.titulo
+        if self.objeto == 'Categoria' or self.objeto == 'Facultad' or self.objeto == 'Sede':
+            context["relacionados"] = self.model.objects.get(pk=self.object.pk).ofertalaboral_set.all()
+        return context
 
-class Facultades(Registros):
+class OfertasAll(ObjetosAll):
     
-    def __init__(self):
-        template_name = 'Administracion/gestionregistros.html'
-        title = 'Registrar una nueva Facultad de la Universidad'
-        objeto = 'Facultad'
-        url = 'facultades_all'
-        Registros.__init__(self, template_name, Facultad, FacultadForm, title, objeto, url)
+    model = OfertaLaboral
+    paginate_by = 20
+    objeto = 'OfertaLaboral'
+    titulo = 'Listado de Ofertas Laborales'
+    
+class OfertaCrear(ObjetoCreate):
+    
+    model = OfertaLaboral
+    objeto = 'OfertaLaboral'
+    titulo = 'Registrar una nueva oferta Laboral'
+    
+class OfertaUpdate(ObjetoUpdate):
+    
+    model = OfertaLaboral
+    objeto = 'OfertaLaboral'
+    titulo = 'Actualizar datos de Ofertas Laborales'
+            
+class OfertaDelete(ObjetoDelete):
+    
+    model = OfertaLaboral
+    objeto = 'OfertaLaboral'
+    titulo = 'Eliminar una Ofertas Laborales'
+    success_url = reverse_lazy('ofertaslaborales_all')
 
-class FacultadesAll(Registros):
+class CategoriasAll(ObjetosAll):
     
-    def __init__(self):
-        template_name = 'Administracion/gestionTabla.html'
-        title = None
-        objeto = 'Facultad'
-        url = 'facultades_all'
-        Registros.__init__(self, template_name, Facultad, FacultadForm, title, objeto, url)
+    model = Categoria
+    paginate_by = 20
+    objeto = 'Categoria'
+    titulo = 'Listado de Categorias'
+    
+class CategoriaCrear(ObjetoCreate):
+    
+    model = Categoria
+    objeto = 'Categoria'
+    titulo = 'Registrar una nueva Categoria'
+    
+class CategoriaUpdate(ObjetoUpdate):
+    
+    model = Categoria
+    objeto = 'Categoria'
+    titulo = 'Actualizar datos de Categoria'
+            
+class CategoriaDelete(ObjetoDelete):
+    
+    model = Categoria
+    objeto = 'Categoria'
+    titulo = 'Eliminar una Categoria'
+    success_url = reverse_lazy('categorias_all')
 
-class FacultadesUpdate(RegistroUpdate):
+class FacultadesAll(ObjetosAll):
     
-    def __init__(self):
-        template_name = 'Administracion/gestionregistros.html'
-        title = 'Modificar campos de la Facultad'
-        objeto = 'Facultad'
-        url = 'facultades_all'
-        RegistroUpdate.__init__(self, template_name, Facultad, FacultadForm, title, objeto, url)
+    model = Facultad
+    paginate_by = 20
+    objeto = 'Facultad'
+    titulo = 'Listado de Facultades'
+    
+class FacultadCrear(ObjetoCreate):
+    
+    model = Facultad
+    objeto = 'Facultad'
+    titulo = 'Registrar una nueva Facultad'
+    
+class FacultadUpdate(ObjetoUpdate):
+    
+    model = Facultad
+    objeto = 'Facultad'
+    titulo = 'Actualizar datos de Facultad'
+            
+class FacultadDelete(ObjetoDelete):
+    
+    model = Facultad
+    objeto = 'Facultad'
+    titulo = 'Eliminar una Facultad'
+    success_url = reverse_lazy('facultades_all')
 
-class FacultadesDelete(RegistroDelete):
+class SedesAll(ObjetosAll):
     
-    def __init__(self):
-        objeto = 'Facultad'
-        template_name = 'Administracion/eliminarregistros.html'
-        success_url = 'facultades_all'
-        RegistroDelete.__init__(self, template_name, Facultad, objeto, success_url)
-        
-class Sedes(Registros):
+    model = Sede
+    paginate_by = 20
+    objeto = 'Sede'
+    titulo = 'Listado de Sedes'
     
-    def __init__(self):
-        template_name = 'Administracion/gestionregistros.html'
-        title = 'Registrar una nueva Sede de la Universidad'
-        objeto = 'Sede'
-        url = 'sedes_all'
-        Registros.__init__(self, template_name, Sede, SedeForm, title, objeto, url)
-
-class SedesAll(Registros):
+class SedeCrear(ObjetoCreate):
     
-    def __init__(self):
-        template_name = 'Administracion/gestionTabla.html'
-        title = 'Registrar una nueva Oferta Laboral'
-        objeto = 'Sede'
-        url = 'sedes_all'
-        Registros.__init__(self, template_name, Sede, SedeForm, title, objeto, url)
-        
-class SedesUpdate(RegistroUpdate):
+    model = Sede
+    objeto = 'Sede'
+    titulo = 'Registrar una nueva Sede'
     
-    def __init__(self):
-        template_name = 'Administracion/gestionregistros.html'
-        title = 'Modificar campos de la Sede'
-        objeto = 'Sede'
-        url = 'sedes_all'
-        RegistroUpdate.__init__(self, template_name, Sede, SedeForm, title, objeto, url)
-
-class SedesDelete(RegistroDelete):
+class SedeUpdate(ObjetoUpdate):
     
-    def __init__(self):
-        objeto = 'Sede'
-        template_name = 'Administracion/eliminarregistros.html'
-        success_url = 'sedes_all'
-        RegistroDelete.__init__(self, template_name, Sede, objeto, success_url)
+    model = Sede
+    objeto = 'Sede'
+    titulo = 'Actualizar datos de Sede'
+            
+class SedeDelete(ObjetoDelete):
+    
+    model = Sede
+    objeto = 'Sede'
+    titulo = 'Eliminar una Sede'
+    success_url = reverse_lazy('sedes_all')

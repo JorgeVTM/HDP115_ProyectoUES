@@ -10,7 +10,7 @@
             <h2>Tabla de resultados</h2>
         </caption>
         <thead>
-            {% for field in model.values %}
+            {% for field in object_list.values %}
                 {% if forloop.last %}
                 {% for dato in field.keys %}
                     {% if forloop.counter <= 5 %}
@@ -22,7 +22,7 @@
             {% endfor %}
         </thead>
         <tbody>
-            {% for field in model.values %}
+            {% for field in object_list.values %}
                 <tr>
                 {% for dato in field.values %}
                     {% if forloop.counter <= 5 %}
