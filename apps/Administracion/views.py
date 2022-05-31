@@ -12,6 +12,7 @@ from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.views.generic.edit import DeleteView
+from django.db.models import *
 from apps.OfertasLaborales.models import *
 from apps.OfertasLaborales.forms import *
 from .models import *
@@ -101,6 +102,10 @@ class RegistroDelete(DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["objeto"] = self.objeto
+        objeto = self.get_object()
+        context["relacionados"] = None
+        if self.objeto == 'Categoria' or self.objeto == 'Facultad' or self.objeto == 'Sede':
+            context["relacionados"] = self.model.objects.get(pk=objeto.pk).ofertalaboral_set.all()
         return context
     
 class OfertasLaborales(Registros):
@@ -135,7 +140,7 @@ class OfertasLaboralesDelete(RegistroDelete):
     
     def __init__(self):
         objeto = 'OfertaLaboral'
-        template_name = 'Administracion/eliminar.html'
+        template_name = 'Administracion/eliminarregistros.html'
         success_url = 'ofertaslaborales_all'
         RegistroDelete.__init__(self, template_name, OfertaLaboral, objeto, success_url)
      
@@ -170,7 +175,7 @@ class CategoriasDelete(RegistroDelete):
     
     def __init__(self):
         objeto = 'Categoria'
-        template_name = 'Administracion/eliminar.html'
+        template_name = 'Administracion/eliminarregistros.html'
         success_url = 'categorias_all'
         RegistroDelete.__init__(self, template_name, Categoria, objeto, success_url)
 
@@ -205,7 +210,7 @@ class FacultadesDelete(RegistroDelete):
     
     def __init__(self):
         objeto = 'Facultad'
-        template_name = 'Administracion/eliminar.html'
+        template_name = 'Administracion/eliminarregistros.html'
         success_url = 'facultades_all'
         RegistroDelete.__init__(self, template_name, Facultad, objeto, success_url)
         
@@ -240,6 +245,6 @@ class SedesDelete(RegistroDelete):
     
     def __init__(self):
         objeto = 'Sede'
-        template_name = 'Administracion/eliminar.html'
+        template_name = 'Administracion/eliminarregistros.html'
         success_url = 'sedes_all'
         RegistroDelete.__init__(self, template_name, Sede, objeto, success_url)

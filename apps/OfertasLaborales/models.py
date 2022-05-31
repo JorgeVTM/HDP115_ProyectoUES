@@ -105,7 +105,7 @@ class OfertaLaboral(models.Model):
     sede = models.ForeignKey(Sede, on_delete=models.CASCADE)
     
     def __str__(self):  
-        texto = 'area: {0}. cargo: {1}. vacante: {2}. salario: {3}.'    
+        texto = 'Ofertas Laboral. area: {0}. cargo: {1}. vacante: {2}. salario: {3}.'    
         return texto.format(self.area_de_trabajo,self.cargo_solicitado,self.vacantes,self.salario_minimo)
     
 #Modelo para las solicitudes laborales

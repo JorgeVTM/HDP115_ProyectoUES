@@ -245,6 +245,9 @@
     label, input{
         margin-right: auto;
     }
+    p{
+        @include roboto-normal;
+    }
     input{
         border: 1px solid $color-border-1;
         box-sizing: border-box;
