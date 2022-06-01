@@ -87,7 +87,7 @@ class Busqueda(Inicio):
                 query = None
         return query
 
-# @method_decorator(decorators, name='post')
+@method_decorator(decorators, name='post')
 class OfertaView(DetailView):
     model = OfertaLaboral
     template_name = 'OfertasLaborales/solicitudoferta.html'
