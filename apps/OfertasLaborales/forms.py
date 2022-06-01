@@ -61,7 +61,7 @@ class PerfilForm(forms.ModelForm):
     
     class Meta:
         
-        model =   Perfil
+        model = Perfil
         atributos = {'placeholder': 'Agrege una descripción...', 'cols' : 50, 'rows': 10,}
 
         fields = ('formacion_academica', 'experiencia_laboral', 'cursos_realizados', 'idiomas','conocimientos_adicionales')
@@ -81,3 +81,10 @@ class PerfilForm(forms.ModelForm):
         self.fields['cursos_realizados'].required = False
         self.fields['idiomas'].required = False
         self.fields['conocimientos_adicionales'].required = False
+
+#formulario para las solicitudes laborales
+class SolicitudLaboralForm(forms.ModelForm):
+    
+    class Meta:  
+        model =   SolicitudLaboral
+        fields = '__all__'

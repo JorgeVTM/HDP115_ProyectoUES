@@ -46,7 +46,7 @@ class Perfil(models.Model):
 class Categoria(models.Model):
     
     #Propiedades de la tabla
-    nombre = models.CharField(max_length=100, default=None)
+    nombre = models.CharField(max_length=100, default=None, unique=True)
 
     def get_nombre(self):
         return self.nombre
@@ -60,7 +60,7 @@ class Categoria(models.Model):
 class Facultad(models.Model):
     
     #Propiedades de la tabla
-    nombre = models.CharField(max_length=100, default=None)
+    nombre = models.CharField(max_length=100, default=None, unique=True)
 
     def get_nombre(self):
         return self.nombre
@@ -74,7 +74,7 @@ class Facultad(models.Model):
 class Sede(models.Model):
     
     #Propiedades de la tabla
-    nombre = models.CharField(max_length=100, default=None)
+    nombre = models.CharField(max_length=100, default=None, unique=True)
     ciudad = models.CharField(max_length=100, default=None, null=True)
     departamento = models.CharField(max_length=100, default=None, null=True)
     
@@ -112,8 +112,8 @@ class OfertaLaboral(models.Model):
 class SolicitudLaboral(models.Model):
 
     #Relaciones con los modelos
-    ofertalaboral = models.ForeignKey(OfertaLaboral, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    ofertalaboral = models.ForeignKey(OfertaLaboral, on_delete=models.CASCADE, unique=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
     
     def __str__(self):
         texto = 'oferta laboral: {0}. persona: {1}.'        

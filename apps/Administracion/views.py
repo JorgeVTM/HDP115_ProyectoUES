@@ -84,12 +84,16 @@ class OfertaCrear(ObjetoCreate):
     model = OfertaLaboral
     objeto = 'OfertaLaboral'
     titulo = 'Registrar una nueva oferta Laboral'
+    get_form = OfertasLaboralesForm
+    success_url = reverse_lazy('ofertaslaborales_all')
     
 class OfertaUpdate(ObjetoUpdate):
     
     model = OfertaLaboral
     objeto = 'OfertaLaboral'
     titulo = 'Actualizar datos de Ofertas Laborales'
+    get_form = OfertasLaboralesForm
+    success_url = reverse_lazy('ofertaslaborales_all')
             
 class OfertaDelete(ObjetoDelete):
     
@@ -110,12 +114,16 @@ class CategoriaCrear(ObjetoCreate):
     model = Categoria
     objeto = 'Categoria'
     titulo = 'Registrar una nueva Categoria'
+    get_form = CategoriaForm
+    success_url = reverse_lazy('categorias_all')
     
 class CategoriaUpdate(ObjetoUpdate):
     
     model = Categoria
     objeto = 'Categoria'
     titulo = 'Actualizar datos de Categoria'
+    get_form = CategoriaForm
+    success_url = reverse_lazy('categorias_all')
             
 class CategoriaDelete(ObjetoDelete):
     
@@ -136,12 +144,16 @@ class FacultadCrear(ObjetoCreate):
     model = Facultad
     objeto = 'Facultad'
     titulo = 'Registrar una nueva Facultad'
+    get_form = FacultadForm
+    success_url = reverse_lazy('facultades_all')
     
 class FacultadUpdate(ObjetoUpdate):
     
     model = Facultad
     objeto = 'Facultad'
     titulo = 'Actualizar datos de Facultad'
+    get_form = FacultadForm
+    success_url = reverse_lazy('facultades_all')
             
 class FacultadDelete(ObjetoDelete):
     
@@ -162,12 +174,16 @@ class SedeCrear(ObjetoCreate):
     model = Sede
     objeto = 'Sede'
     titulo = 'Registrar una nueva Sede'
+    get_form = SedeForm
+    success_url = reverse_lazy('sedes_all')
     
 class SedeUpdate(ObjetoUpdate):
     
     model = Sede
     objeto = 'Sede'
     titulo = 'Actualizar datos de Sede'
+    get_form = SedeForm
+    success_url = reverse_lazy('sedes_all')
             
 class SedeDelete(ObjetoDelete):
     

@@ -1,4 +1,3 @@
-import json
 from os import system
 from django.db.models import *
 from django.shortcuts import render, redirect
@@ -6,11 +5,11 @@ from django.views import View
 from django.views.generic import ListView, TemplateView, DetailView
 from django.views.generic.list import MultipleObjectMixin
 from django.contrib.auth.models import User
-from django.core import serializers
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
+from django.views.generic.edit import *
 from .models import *
 from .forms import *
 
@@ -86,30 +85,13 @@ class Busqueda(Inicio):
         return query
 
 @method_decorator(decorators, name='post')
-class Solicitud(TemplateView):
-    
+class Solicitud(DetailView):
     model = OfertaLaboral
     template_name = 'OfertasLaborales/solicitudoferta.html'
-     
-    def get(self, request, idoferta, nombre):
-        user = request.user
-        if user.is_staff:
-            return redirect('administracion')
-        context = self.get_context_data(idoferta)   
-        return render(request, self.template_name, context)
     
-    def get_context_data(self, idoferta, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["ofertalaboral"] = self.model.objects.get(pk=idoferta)
-        context["solicitud"] = SolicitudLaboral.objects.all()
-        context["categoria"] = Categoria.objects.get(ofertalaboral__pk=idoferta)
-        context["facultad"] = Facultad.objects.get(ofertalaboral__pk=idoferta)
-        context["sede"] = Sede.objects.get(ofertalaboral__pk=idoferta)
-        return context
-    
-    def post(self, request, idoferta, nombre):
+    def post(self, request, pk):
         user = request.user
-        oferta = OfertaLaboral.objects.get(id=idoferta)
+        oferta = OfertaLaboral.objects.get(id=pk)
         solicitudlaboral = SolicitudLaboral
         try:
             solicitudlaboral = SolicitudLaboral.objects.get(user=user,ofertalaboral=oferta)
@@ -117,8 +99,7 @@ class Solicitud(TemplateView):
         except solicitudlaboral.DoesNotExist:
             solicitudlaboral = SolicitudLaboral.objects.create(user=user,ofertalaboral=oferta)
         return redirect('inicio')
-    
-    
+      
 class Registrarse(TemplateView):
     model = User
     template_name = 'OfertasLaborales/registrarse.html'
@@ -131,13 +112,10 @@ class Registrarse(TemplateView):
         form = RegistrarUsuarioForm(request.POST)
         if form.is_valid():
             form.save()
-            
             username = form.cleaned_data['username']
             user = User.objects.get(username=username)
-            
             # # Tambien creamos un persona para el usuario
             persona = Persona.objects.create(user_id = user.id)
-            
             # # Tambien creamos un persona laboral
             persona = Perfil.objects.create(persona_id = persona.id)
             
@@ -148,97 +126,32 @@ class Registrarse(TemplateView):
             return render(request, self.template_name, context)
 
 @method_decorator(decorators, name='get')
-@method_decorator(decorators, name='post')
-class PerfilUsuario(TemplateView):
+class PerfilUsuario(UpdateView):
     
     model = User
+    get_form = UsuarioForm
     template_name = 'OfertasLaborales/perfilusuario.html'
-    
-    def get(self, request):
-        user = request.user
-        context = self.get_context_data(user)
-        return render(request, self.template_name, context)
-    
-    def post(self, request):
-        #recibimos la información del modelo objeto
-        user = request.user    
-        #Enviamos los datos del formulario con la instacia objeto modelo
-        form = UsuarioForm(request.POST, instance=user)
-        # Validación para el formulario con los datos de persona de usuario
-        if form.is_valid():
-            form.save()
-            return self.get(request)
-    
-    def get_context_data(self, user,**kwargs):
-        context = super().get_context_data(**kwargs)
-        usuario = json.loads(serializers.serialize('jsonl',User.objects.filter(id=user.id)))
-        context['form'] = UsuarioForm(usuario['fields'])
-        context['title'] = "Datos de cuenta"
-        return context
+    fields = '__all__'
 
 @method_decorator(decorators, name='get')
-@method_decorator(decorators, name='post')
-class InfoPersonal(TemplateView):
+class InfoPersonal(UpdateView):
     
     model = Persona
+    get_form = PersonaForm
     template_name = 'OfertasLaborales/perfilusuario.html'
-    
-    def get(self, request):
-        user = request.user
-        context = self.get_context_data(user)
-        return render(request, self.template_name, context)
-    
-    def post(self, request):
-        #recibimos la información del modelo objeto
-        user = request.user    
-        persona = request.user.persona
-        #Enviamos los datos del formulario con la instacia objeto modelo
-        form = PersonaForm(request.POST, instance=persona)
-        # Validación para el formulario con los datos de persona de usuario
-        if form.is_valid():
-            form.save()
-            return self.get(request)
-    
-    def get_context_data(self, user,**kwargs):
-        context = super().get_context_data(**kwargs)
-        persona = json.loads(serializers.serialize('jsonl',Persona.objects.all().filter(pk=user.persona.pk)))
-        context['form'] = PersonaForm(persona['fields'])
-        context['title'] = "Información Personal"
-        return context
-    
+    fields = ('fecha_nacimiento','genero','edad','telefono','dui','direccion')
+
 @method_decorator(decorators, name='get')
-@method_decorator(decorators, name='post')
-class DatoLaboral(TemplateView):
+class DatoLaboral(UpdateView):
     
     model = Perfil
+    get_form = PerfilForm
     template_name = 'OfertasLaborales/perfilusuario.html'
-    
-    def get(self, request):
-        user = request.user
-        context = self.get_context_data(user)
-        return render(request, self.template_name, context)
-    
-    def post(self, request):
-        #recibimos la información del modelo objeto
-        user = request.user    
-        perfil = request.user.persona.perfil
-        #Enviamos los datos del formulario con la instacia objeto modelo
-        form = PerfilForm(request.POST, instance=perfil)
-        # Validación para el formulario con los datos de persona de usuario
-        if form.is_valid():
-            form.save()
-            return self.get(request)
-    
-    def get_context_data(self, user,**kwargs):
-        context = super().get_context_data(**kwargs)
-        perfil = json.loads(serializers.serialize('jsonl',Perfil.objects.all().filter(pk=user.persona.perfil.pk)))
-        context['form'] = PerfilForm(perfil['fields'])
-        context['title'] = "Información Laboral"
-        return context
+    fields = '__all__'
 
+@method_decorator(decorators, name='get')
 class Informacion(TemplateView):
     
-    model = User
     template_name = 'OfertasLaborales/informacion.html'
     
     def get(self, request):
