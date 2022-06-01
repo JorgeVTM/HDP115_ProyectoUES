@@ -158,4 +158,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Si su valor el falso nada de los archivos se comprimiran
 # Se utiliza cuando no se esta en producción
-COMPRESS_ENABLED = True
+COMPRESS_ENABLED = False

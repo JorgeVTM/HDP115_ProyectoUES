@@ -83,11 +83,6 @@
     display: flex;
     align-items: center;
     margin-left: auto;
-
-    form{
-        margin: 0 5px;   
-        display: flex; 
-    }
 }
 
 .form-seach{
@@ -225,6 +220,20 @@
     color: $color-texto-6;
     @include roboto-400;
 }
+
+.messages-alert{
+    @extend .errorlist !optional;
+    background-color: $color-general-11;
+    text-align: center;
+    strong{
+        font-size: 14px;
+    }
+}
+
+.messages{
+    margin: 0;    
+}
+
 
 .form{
     display: grid;

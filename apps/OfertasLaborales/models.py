@@ -112,8 +112,8 @@ class OfertaLaboral(models.Model):
 class SolicitudLaboral(models.Model):
 
     #Relaciones con los modelos
-    ofertalaboral = models.ForeignKey(OfertaLaboral, on_delete=models.CASCADE, unique=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
+    ofertalaboral = models.ForeignKey(OfertaLaboral, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self):
         texto = 'oferta laboral: {0}. persona: {1}.'        

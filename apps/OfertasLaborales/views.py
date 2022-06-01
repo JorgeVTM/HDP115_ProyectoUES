@@ -2,6 +2,7 @@ from os import system
 from django.db.models import *
 from django.shortcuts import render, redirect
 from django.views import View
+from django.urls import reverse_lazy, reverse, resolve
 from django.views.generic import ListView, TemplateView, DetailView
 from django.views.generic.list import MultipleObjectMixin
 from django.contrib.auth.models import User
@@ -9,6 +10,8 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import *
 from .models import *
 from .forms import *
@@ -84,21 +87,20 @@ class Busqueda(Inicio):
                 query = None
         return query
 
-@method_decorator(decorators, name='post')
-class Solicitud(DetailView):
+# @method_decorator(decorators, name='post')
+class OfertaView(DetailView):
     model = OfertaLaboral
     template_name = 'OfertasLaborales/solicitudoferta.html'
     
     def post(self, request, pk):
-        user = request.user
-        oferta = OfertaLaboral.objects.get(id=pk)
-        solicitudlaboral = SolicitudLaboral
+        solicitud = SolicitudLaboral
         try:
-            solicitudlaboral = SolicitudLaboral.objects.get(user=user,ofertalaboral=oferta)
+            solicitud = SolicitudLaboral.objects.get(user=request.user,ofertalaboral_id=pk)
+            messages.success(request, 'Ya has ennviado una solicitud laboral para esta oferta!!!')
+            return render(request, self.template_name)
+        except solicitud.DoesNotExist:
+            solicitud = SolicitudLaboral.objects.create(user=request.user,ofertalaboral_id=pk)
             return redirect('inicio')
-        except solicitudlaboral.DoesNotExist:
-            solicitudlaboral = SolicitudLaboral.objects.create(user=user,ofertalaboral=oferta)
-        return redirect('inicio')
       
 class Registrarse(TemplateView):
     model = User
@@ -129,26 +131,45 @@ class Registrarse(TemplateView):
 class PerfilUsuario(UpdateView):
     
     model = User
-    get_form = UsuarioForm
+    form_class = UsuarioForm
     template_name = 'OfertasLaborales/perfilusuario.html'
-    fields = '__all__'
+    
+    def post(self, request, pk):
+        form = self.form_class(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Datos actualizados correctamente')
+        return render(request, self.template_name, {'form': form})
 
 @method_decorator(decorators, name='get')
 class InfoPersonal(UpdateView):
     
     model = Persona
-    get_form = PersonaForm
+    form_class = PersonaForm
     template_name = 'OfertasLaborales/perfilusuario.html'
-    fields = ('fecha_nacimiento','genero','edad','telefono','dui','direccion')
+    
+    def post(self, request, pk):
+        form = self.form_class(request.POST, instance=request.user.persona)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Datos actualizados correctamente')
+        return render(request, self.template_name, {'form': form})
 
 @method_decorator(decorators, name='get')
 class DatoLaboral(UpdateView):
     
     model = Perfil
-    get_form = PerfilForm
+    form_class = PerfilForm
     template_name = 'OfertasLaborales/perfilusuario.html'
-    fields = '__all__'
-
+    success_url = reverse_lazy('informacion')
+    
+    def post(self, request, pk):
+        form = self.form_class(request.POST, instance=request.user.persona.perfil)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Datos actualizados correctamente')
+        return render(request, self.template_name, {'form': form})
+    
 @method_decorator(decorators, name='get')
 class Informacion(TemplateView):
     

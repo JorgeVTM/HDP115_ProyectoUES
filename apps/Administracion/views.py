@@ -50,7 +50,6 @@ class ObjetoCreate(CreateView):
 class ObjetoUpdate(UpdateView):
     
     template_name = 'Administracion/gestionregistros.html'
-    fields = '__all__'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -92,7 +91,7 @@ class OfertaUpdate(ObjetoUpdate):
     model = OfertaLaboral
     objeto = 'OfertaLaboral'
     titulo = 'Actualizar datos de Ofertas Laborales'
-    get_form = OfertasLaboralesForm
+    form_class = OfertasLaboralesForm
     success_url = reverse_lazy('ofertaslaborales_all')
             
 class OfertaDelete(ObjetoDelete):
@@ -122,7 +121,7 @@ class CategoriaUpdate(ObjetoUpdate):
     model = Categoria
     objeto = 'Categoria'
     titulo = 'Actualizar datos de Categoria'
-    get_form = CategoriaForm
+    form_class = CategoriaForm
     success_url = reverse_lazy('categorias_all')
             
 class CategoriaDelete(ObjetoDelete):
@@ -152,7 +151,7 @@ class FacultadUpdate(ObjetoUpdate):
     model = Facultad
     objeto = 'Facultad'
     titulo = 'Actualizar datos de Facultad'
-    get_form = FacultadForm
+    form_class = FacultadForm
     success_url = reverse_lazy('facultades_all')
             
 class FacultadDelete(ObjetoDelete):
@@ -182,7 +181,7 @@ class SedeUpdate(ObjetoUpdate):
     model = Sede
     objeto = 'Sede'
     titulo = 'Actualizar datos de Sede'
-    get_form = SedeForm
+    form_class = SedeForm
     success_url = reverse_lazy('sedes_all')
             
 class SedeDelete(ObjetoDelete):

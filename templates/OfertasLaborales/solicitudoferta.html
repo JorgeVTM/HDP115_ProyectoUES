@@ -8,8 +8,17 @@
     <div class="ofertalab-solicitud">
         <nav class="navbar-ofertaslab navbar-ofertasolicitud">
             <a href="{% url 'inicio' %}">Volver al listado</a>
-            <form action="" method='post'>{% csrf_token %}<button>Enviar Solicitud</button></form>            
+            <form action="" method='post'>{% csrf_token %}
+                <button>Enviar Solicitud</button>
+            </form>            
         </nav>
+        {% if messages %}
+        <ul class="messages-alert">
+            {% for message in messages %}
+            <li><strong>{{ message }}</strong></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         <h2><strong>Oferta Laboral: </strong>{{ofertalaboral.area_de_trabajo}}</h2>
         <div class="solicitud-items">
             <div class="categorias">

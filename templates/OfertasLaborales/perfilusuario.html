@@ -57,6 +57,13 @@
 <div class="contenedor contenedor-form formsperfil">
     {% block contenido-items %}
     <div>
+        {% if messages %}
+        <ul class="messages messages-alert">
+            {% for message in messages %}
+            <li><strong>{{ message }}</strong></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         <form action="" class="form-perfil" method="post">
             {% csrf_token %}
             <h1>{{title}}</h1>
