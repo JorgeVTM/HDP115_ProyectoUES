@@ -26,6 +26,47 @@
     width: 100%;
 }
 
+.presentacion-admin{
+    width: 100%;
+    height: 100%;
+    header{
+        height: 40px;
+        background-color: $color-navbar-4;
+    }
+    section{
+        width: 100%;
+        display: inline-block;
+    }
+}
+
+.seccion-presentacion{
+    text-align: center;
+    background-color: $color-general-3;
+
+    h1,svg,p,a{
+        color: $color-texto-6;
+        font-size: 20px;
+        margin: 30px 0;
+        @include roboto-normal;
+    }
+    a,svg{
+        display: inline-block;
+    }
+    svg{
+        width: 200px;
+        height: 200px;
+        color: $color-general-10;
+    }
+    a{
+        width: max-content;
+        padding: 10px;
+        border-radius: 10px;
+        color: #ffffff;
+        background-color: $color-btn-3;
+    }
+    a:hover{background-color: $color-hover-7;}
+}
+
 .contenedor-admin-ofertaslab{
     display: flex;
 }

@@ -156,8 +156,8 @@
     }
 }
 .ofertalab-solicitud{
-    display: grid;
     border: 1px solid $color-border-1;
+    height: min-content;
     max-width: 1000px;
     min-width: 1000px;
     background-color: $color-general-3;
@@ -166,6 +166,10 @@
         color: $color-texto-1;
         padding: 10px;
     }
+}
+
+.detalles-descripcion{
+    padding: 20px;
 }
 
 .solicitud-items{

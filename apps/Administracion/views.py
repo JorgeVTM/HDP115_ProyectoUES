@@ -21,7 +21,21 @@ class Administracion(TemplateView):
     model = User
     
     def get(self, request):
-        return render(request, self.template_name)     
+        return render(request, self.template_name)    
+    
+@method_decorator(permission_required('is_staff'), name='get')  
+class PerfilAdmin(UpdateView):
+    
+    model = User
+    form_class = UsuarioForm
+    template_name = 'Administracion/perfiladmin.html'
+    
+    def post(self, request, pk):
+        form = self.form_class(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Datos actualizados correctamente')
+        return render(request, self.template_name, {'form': form}) 
     
 @method_decorator(permission_required('is_staff'), name='get')  
 class ObjetosAll(ListView):
