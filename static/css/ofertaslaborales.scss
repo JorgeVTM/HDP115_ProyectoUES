@@ -230,6 +230,11 @@
     }
 }
 
+.messages-ok{
+    @extend .messages-alert !optional;
+    background-color: $color-general-12;
+}
+
 .messages{
     margin: 0;    
 }

@@ -5,9 +5,17 @@
 
 {% block main %}
 <div class="contenedor-tabla">
+    
     <table class="tabla-formularios">
         <caption>
             <h2>Tabla de resultados</h2>
+            {% if messages %}
+            <ul class="messages messages-alert">
+                {% for message in messages %}
+                    <li><strong>{{ message }}</strong></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
         </caption>
         <thead>
             {% for field in object_list.values %}

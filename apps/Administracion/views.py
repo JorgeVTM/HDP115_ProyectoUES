@@ -11,6 +11,7 @@ from apps.OfertasLaborales.models import *
 from apps.OfertasLaborales.forms import *
 from .models import *
 from .forms import *
+from django.contrib.messages.views import SuccessMessageMixin
 
 # Create your views here.
 @method_decorator(permission_required('is_staff'), name='get')
@@ -38,7 +39,6 @@ class ObjetosAll(ListView):
 class ObjetoCreate(CreateView):
     
     template_name = 'Administracion/gestionregistros.html'
-    fields = '__all__'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -78,28 +78,31 @@ class OfertasAll(ObjetosAll):
     objeto = 'OfertaLaboral'
     titulo = 'Listado de Ofertas Laborales'
     
-class OfertaCrear(ObjetoCreate):
+class OfertaCrear(SuccessMessageMixin, ObjetoCreate):
     
     model = OfertaLaboral
     objeto = 'OfertaLaboral'
     titulo = 'Registrar una nueva oferta Laboral'
-    get_form = OfertasLaboralesForm
+    form_class = OfertasLaboralesForm
     success_url = reverse_lazy('ofertaslaborales_all')
+    success_message = "Se ha creado un nuevo registro %(area_de_trabajo)s"
     
-class OfertaUpdate(ObjetoUpdate):
+class OfertaUpdate(SuccessMessageMixin, ObjetoUpdate):
     
     model = OfertaLaboral
     objeto = 'OfertaLaboral'
     titulo = 'Actualizar datos de Ofertas Laborales'
     form_class = OfertasLaboralesForm
     success_url = reverse_lazy('ofertaslaborales_all')
+    success_message = "%(area_de_trabajo)s fue modificado correctamente"
             
-class OfertaDelete(ObjetoDelete):
+class OfertaDelete(SuccessMessageMixin, ObjetoDelete):
     
     model = OfertaLaboral
     objeto = 'OfertaLaboral'
     titulo = 'Eliminar una Ofertas Laborales'
     success_url = reverse_lazy('ofertaslaborales_all')
+    success_message = "El registro fue eliminado"
 
 class CategoriasAll(ObjetosAll):
     
@@ -108,28 +111,31 @@ class CategoriasAll(ObjetosAll):
     objeto = 'Categoria'
     titulo = 'Listado de Categorias'
     
-class CategoriaCrear(ObjetoCreate):
+class CategoriaCrear(SuccessMessageMixin, ObjetoCreate):
     
     model = Categoria
     objeto = 'Categoria'
     titulo = 'Registrar una nueva Categoria'
-    get_form = CategoriaForm
+    form_class = CategoriaForm
     success_url = reverse_lazy('categorias_all')
+    success_message = "Se ha creado un nuevo registro %(nombre)s"
     
-class CategoriaUpdate(ObjetoUpdate):
+class CategoriaUpdate(SuccessMessageMixin, ObjetoUpdate):
     
     model = Categoria
     objeto = 'Categoria'
     titulo = 'Actualizar datos de Categoria'
     form_class = CategoriaForm
     success_url = reverse_lazy('categorias_all')
+    success_message = "%(nombre)s fue modificado correctamente"
             
-class CategoriaDelete(ObjetoDelete):
+class CategoriaDelete(SuccessMessageMixin, ObjetoDelete):
     
     model = Categoria
     objeto = 'Categoria'
     titulo = 'Eliminar una Categoria'
     success_url = reverse_lazy('categorias_all')
+    success_message = "El registro fue eliminado"
 
 class FacultadesAll(ObjetosAll):
     
@@ -138,28 +144,31 @@ class FacultadesAll(ObjetosAll):
     objeto = 'Facultad'
     titulo = 'Listado de Facultades'
     
-class FacultadCrear(ObjetoCreate):
+class FacultadCrear(SuccessMessageMixin, ObjetoCreate):
     
     model = Facultad
     objeto = 'Facultad'
     titulo = 'Registrar una nueva Facultad'
-    get_form = FacultadForm
+    form_class = FacultadForm
     success_url = reverse_lazy('facultades_all')
+    success_message = "Se ha creado un nuevo registro %(nombre)s"
     
-class FacultadUpdate(ObjetoUpdate):
+class FacultadUpdate(SuccessMessageMixin, ObjetoUpdate):
     
     model = Facultad
     objeto = 'Facultad'
     titulo = 'Actualizar datos de Facultad'
     form_class = FacultadForm
     success_url = reverse_lazy('facultades_all')
+    success_message = "%(nombre)s fue modificado correctamente"
             
-class FacultadDelete(ObjetoDelete):
+class FacultadDelete(SuccessMessageMixin, ObjetoDelete):
     
     model = Facultad
     objeto = 'Facultad'
     titulo = 'Eliminar una Facultad'
     success_url = reverse_lazy('facultades_all')
+    success_message = "El registro fue eliminado"
 
 class SedesAll(ObjetosAll):
     
@@ -168,25 +177,28 @@ class SedesAll(ObjetosAll):
     objeto = 'Sede'
     titulo = 'Listado de Sedes'
     
-class SedeCrear(ObjetoCreate):
+class SedeCrear(SuccessMessageMixin,ObjetoCreate):
     
     model = Sede
     objeto = 'Sede'
     titulo = 'Registrar una nueva Sede'
-    get_form = SedeForm
+    form_class = SedeForm
     success_url = reverse_lazy('sedes_all')
+    success_message = "Se ha creado un nuevo registro %(nombre)s"
     
-class SedeUpdate(ObjetoUpdate):
+class SedeUpdate(SuccessMessageMixin, ObjetoUpdate):
     
     model = Sede
     objeto = 'Sede'
     titulo = 'Actualizar datos de Sede'
     form_class = SedeForm
     success_url = reverse_lazy('sedes_all')
+    success_message = "%(nombre)s fue modificado correctamente"
             
-class SedeDelete(ObjetoDelete):
+class SedeDelete(SuccessMessageMixin, ObjetoDelete):
     
     model = Sede
     objeto = 'Sede'
     titulo = 'Eliminar una Sede'
     success_url = reverse_lazy('sedes_all')
+    success_message = "El registro fue eliminado"
