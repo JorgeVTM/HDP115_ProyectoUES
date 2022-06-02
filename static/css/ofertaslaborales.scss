@@ -243,7 +243,6 @@
     margin: 0;    
 }
 
-
 .form{
     display: grid;
     justify-items: center;
@@ -361,4 +360,18 @@
 
 .formsperfil{
     margin-left: 25%;
+}
+
+.perfil-informacion{
+    background-color: $color-general-3;
+    border: 1px solid $color-border-1;
+    text-align: center;
+    width: 800px;
+    padding: 20px;
+
+    p{
+        @include roboto-300;
+        font-size: 14px;
+        margin: 10px;
+    }
 }

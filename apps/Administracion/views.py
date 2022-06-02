@@ -5,16 +5,18 @@ from django.views.generic import ListView, TemplateView, DetailView
 from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import permission_required
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.admin.views.decorators import staff_member_required
 from django.views.generic.edit import *
 from django.db.models import *
 from apps.OfertasLaborales.models import *
 from apps.OfertasLaborales.forms import *
 from .models import *
 from .forms import *
-from django.contrib.messages.views import SuccessMessageMixin
+
 
 # Create your views here.
-@method_decorator(permission_required('is_staff'), name='get')
+@method_decorator(staff_member_required, name='get')
 class Administracion(TemplateView):
     
     template_name = 'Administracion/administracion.html'
@@ -23,7 +25,7 @@ class Administracion(TemplateView):
     def get(self, request):
         return render(request, self.template_name)    
     
-@method_decorator(permission_required('is_staff'), name='get')  
+@method_decorator(staff_member_required, name='get')
 class PerfilAdmin(UpdateView):
     
     model = User
@@ -37,7 +39,7 @@ class PerfilAdmin(UpdateView):
             messages.success(request, 'Datos actualizados correctamente')
         return render(request, self.template_name, {'form': form}) 
     
-@method_decorator(permission_required('is_staff'), name='get')  
+@method_decorator(staff_member_required, name='get')
 class ObjetosAll(ListView):
     
     template_name = 'Administracion/gestionTabla.html'
@@ -50,7 +52,7 @@ class ObjetosAll(ListView):
         context["titulo"] = self.titulo
         return context
 
-@method_decorator(permission_required('is_staff'), name='get')  
+@method_decorator(staff_member_required, name='get')
 class ObjetoCreate(CreateView):
     
     template_name = 'Administracion/gestionregistros.html'
@@ -61,7 +63,7 @@ class ObjetoCreate(CreateView):
         context["titulo"] = self.titulo
         return context
 
-@method_decorator(permission_required('is_staff'), name='get')
+@method_decorator(staff_member_required, name='get')
 class ObjetoUpdate(UpdateView):
     
     template_name = 'Administracion/gestionregistros.html'
@@ -72,7 +74,7 @@ class ObjetoUpdate(UpdateView):
         context["titulo"] = self.titulo
         return context
 
-@method_decorator(permission_required('is_staff'), name='get')
+@method_decorator(staff_member_required, name='get')
 class ObjetoDelete(DeleteView):
     
     template_name = 'Administracion/eliminarregistros.html'

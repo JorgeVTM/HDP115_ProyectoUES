@@ -15,6 +15,11 @@ class RegistrarUsuarioForm(UserCreationForm):
         
         model = User   
         fields = ('username', 'first_name', 'last_name', 'password1', 'password2')
+    
+    def __init__(self, *args, **kwargs):
+        super(RegistrarUsuarioForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
         
 #formulario para gestionar los datos de usuario 
 class UsuarioForm(forms.ModelForm):
