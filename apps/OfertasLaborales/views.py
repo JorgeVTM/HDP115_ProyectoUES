@@ -97,7 +97,7 @@ class OfertaView(DetailView):
         try:
             solicitud = SolicitudLaboral.objects.get(user=request.user,ofertalaboral_id=pk)
             messages.success(request, 'Ya has enviado una solicitud laboral para esta oferta!!!')
-            return render(request, self.template_name)
+            return render(request, self.template_name, {'ofertalaboral': self.get_object() })
         except solicitud.DoesNotExist:
             solicitud = SolicitudLaboral.objects.create(user=request.user,ofertalaboral_id=pk)
             return redirect('inicio')
