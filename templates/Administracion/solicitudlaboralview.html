@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+{% extends 'Administracion/solicitudeslaborales.html' %}
+{% load compress %}
+{% load static %}
+
+{% block contenedor-solicitudes %}
+    <div class="ofertalab-solicitud">
+        <nav class="navbar-ofertaslab navbar-ofertasolicitud">
+            <a href="{% url 'solicitudeslaborales_all' %}">Volver al listado</a>
+            <form>{% csrf_token %}
+                <button>Contratar Personal</button>
+            </form>         
+        </nav>
+        {% if messages %}
+        <ul class="messages-alert">
+            {% for message in messages %}
+            <li><strong>{{ message }}</strong></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <h2><strong>Solicitud Laboral {{solicitudlaboral.id}}: </strong>{{solicitudlaboral.ofertalaboral.area_de_trabajo}} <strong>Persona: </strong>{{solicitudlaboral.user.username}}</h2>
+        <div class="solicitud-items">
+            <div class="categorias detalles">
+                <img src="{% static 'img/user.webp' %}" alt="img user">
+                <h3>DATOS DE LA PERSONA</h3>
+                <table class="tabladatos">
+                    <tr><td>Usuario:</td><td>{{solicitudlaboral.user.username}}</td></tr>
+                    <tr><td>Nombre:</td><td>{{solicitudlaboral.user.first_name}}</td></tr>
+                    <tr><td>Apellidos:</td><td>{{solicitudlaboral.user.last_name}}</td></tr>
+                    <tr><td>Correo contacto:</td><td>{{solicitudlaboral.user.email}}</td></tr>
+                    <tr><td>Fecha de Nacimiento:</td><td>{{solicitudlaboral.user.persona.fecha_nacimiento}}</td></tr>
+                    <tr><td>Sexo:</td><td>{{solicitudlaboral.user.persona.genero}}</td></tr>
+                    <tr><td>Edad:</td><td>{{solicitudlaboral.user.persona.edad}}</td></tr>
+                    <tr><td>Telefono Contacto:</td><td>{{solicitudlaboral.user.persona.telefono}}</td></tr>
+                    <tr><td>DUI:</td><td>{{solicitudlaboral.user.persona.dui}}</td></tr>
+                    <tr><td>Direccion Vivienda:</td><td>{{solicitudlaboral.user.persona.direccion}}</td></tr>
+                </table>
+                <h3>FORMACIÓN ACADEMICA</h3>
+                <div class="detalles-descripcion">
+                    {{ solicitudlaboral.user.persona.perfil.formacion_academica|linebreaksbr }}
+                </div>
+                <h3>EXPERIENCIA LABORAL</h3>
+                <div class="detalles-descripcion">
+                    {{ solicitudlaboral.user.persona.perfil.experiencia_laboral|linebreaksbr }}
+                </div>
+                <h3>CURSOS REALIZADOS</h3>
+                <div class="detalles-descripcion">
+                    {{ solicitudlaboral.user.persona.perfil.cursos_realizados|linebreaksbr }}
+                </div>
+                <h3>IDIOMAS</h3>
+                <div class="detalles-descripcion">
+                    {{ solicitudlaboral.user.persona.perfil.idiomas|linebreaksbr }}
+                </div>
+                <h3>CONOCIMIENTOS ADICIONALES</h3>
+                <div class="detalles-descripcion">
+                    {{ solicitudlaboral.user.persona.perfil.conocimientos_adicionales|linebreaksbr }}
+                </div>
+            </div>
+            <div class="detalles">
+                <img src="{% static 'img/oferta.png' %}" alt="img oferta">
+                <h3>DETALLES DE LA OFERTA</h3>
+                <table class="tabladatos">
+                    <tr><td>Cargo solicitado:</td><td>{{solicitudlaboral.ofertalaboral.cargo_solicitado}}</td></tr>
+                    <tr><td>Vacantes disponibles:</td><td>{{solicitudlaboral.ofertalaboral.vacantes}}</td></tr>
+                    <tr><td>Tipo de contratación:</td><td>{{solicitudlaboral.ofertalaboral.tipo_contratacion}}</td></tr>
+                    <tr><td>Experiencia laboral solicitada:</td><td>{{solicitudlaboral.ofertalaboral.nivel_experiencia}}</td></tr>
+                    <tr><td>Genero sexual:</td><td>{{solicitudlaboral.ofertalaboral.generos}}</td></tr>
+                    <tr><td>Edad mínima solicitada:</td><td>{{solicitudlaboral.ofertalaboral.edad_solicitada}}</td></tr>
+                    <tr><td>Salario mínimo ofrecido:</td><td>{{solicitudlaboral.ofertalaboral.salario_minimo}}</td></tr>
+                    <tr><td>Salario máximo ofrecido:</td><td>{{solicitudlaboral.ofertalaboral.salario_maximo}}</td></tr>
+                </table>
+                <h3>ESPECIFICACIONES</h3>
+                <table class="tabladatos">
+                    <tr><td>Categoria:</td><td>{{solicitudlaboral.ofertalaboral.categoria.nombre}}</td></tr>
+                    <tr><td>Facultad:</td><td>{{solicitudlaboral.ofertalaboral.facultad.nombre}}</td></tr>
+                    <tr><td>Sede nombre:</td><td>{{solicitudlaboral.ofertalaboral.sede.nombre}}</td></tr>
+                    <tr><td>Ciudad:</td><td>{{solicitudlaboral.ofertalaboral.sede.ciudad}}</td></tr>
+                    <tr><td>Departamento:</td><td>{{solicitudlaboral.ofertalaboral.sede.departamento}}</td></tr>
+                </table>
+                <h3>DESCRIPCIÓN DE LA OFERTA</h3>
+                <div class="detalles-descripcion">
+                    {{ solicitudlaboral.ofertalaboral.descripcion|linebreaksbr }}
+                </div>
+            </div>    
+        </div>
+    </div>
+{% endblock contenedor-solicitudes %}

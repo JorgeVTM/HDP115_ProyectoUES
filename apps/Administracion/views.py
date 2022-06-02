@@ -41,6 +41,7 @@ class PerfilAdmin(UpdateView):
 class ObjetosAll(ListView):
     
     template_name = 'Administracion/gestionTabla.html'
+    # paginate_by = 20
     fields = '__all__'
     
     def get_context_data(self, **kwargs):
@@ -84,11 +85,31 @@ class ObjetoDelete(DeleteView):
         if self.objeto == 'Categoria' or self.objeto == 'Facultad' or self.objeto == 'Sede':
             context["relacionados"] = self.model.objects.get(pk=self.object.pk).ofertalaboral_set.all()
         return context
+    
+class SolcitudesAll(ObjetosAll):
+    
+    template_name = 'Administracion/solicitudeslaborales.html'
+    model = SolicitudLaboral
+    objeto = 'SolicitudLaboral'
+    titulo = 'Listado de Solicitudes Laborales'
+
+class SolicitudView(DetailView):
+    
+    template_name = 'Administracion/solicitudlaboralview.html'
+    model = SolicitudLaboral
+
+class SolicitudDelete(SuccessMessageMixin, DeleteView):
+    
+    template_name = 'Administracion/eliminarsolicitud.html'
+    model = SolicitudLaboral
+    objeto = 'OfertaLaboral'
+    titulo = 'Eliminar una Solicitud Laboral'
+    success_url = reverse_lazy('solicitudeslaborales_all')
+    success_message = "El registro fue eliminado"
 
 class OfertasAll(ObjetosAll):
     
     model = OfertaLaboral
-    paginate_by = 20
     objeto = 'OfertaLaboral'
     titulo = 'Listado de Ofertas Laborales'
     
@@ -121,7 +142,6 @@ class OfertaDelete(SuccessMessageMixin, ObjetoDelete):
 class CategoriasAll(ObjetosAll):
     
     model = Categoria
-    paginate_by = 20
     objeto = 'Categoria'
     titulo = 'Listado de Categorias'
     
@@ -154,7 +174,6 @@ class CategoriaDelete(SuccessMessageMixin, ObjetoDelete):
 class FacultadesAll(ObjetosAll):
     
     model = Facultad
-    paginate_by = 20
     objeto = 'Facultad'
     titulo = 'Listado de Facultades'
     
@@ -187,7 +206,6 @@ class FacultadDelete(SuccessMessageMixin, ObjetoDelete):
 class SedesAll(ObjetosAll):
     
     model = Sede
-    paginate_by = 20
     objeto = 'Sede'
     titulo = 'Listado de Sedes'
     

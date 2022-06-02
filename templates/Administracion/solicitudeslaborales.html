@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+{% extends 'Administracion/administracion.html' %}
+{% load compress %}
+{% load static %}
+
+{% block main-administracion %}
+   <div class="main">
+       <nav class="sub-navbar-admin">
+           <h2>Solicitudes Laborales Actuales</h2>
+       </nav>
+        <main class="contenedor-form sub-main-admin">
+            {% block contenedor-solicitudes %}
+            <div class="contenedor-tabla">
+                <table class="tabla-formularios">
+                    <caption>
+                        <h2>Tabla de resultados</h2>
+                        {% if messages %}
+                        <ul class="messages messages-alert">
+                            {% for message in messages %}
+                                <li><strong>{{ message }}</strong></li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </caption>
+                    <thead>
+                        <th>Id Solicitud</th>
+                        <th>Usuario</th>
+                        <th>Nombre</th>
+                        <th>Edad</th>
+                        <th>Oferta Laboral</th>
+                        <th>Cargo solicitado</th>
+                        <th>Salario Minimo</th>
+                        <th>opciones</th>
+                    </thead>
+                    <tbody>
+                        {% for field in object_list %}
+                        <tr>
+                            <td>{{field.id}}</td>
+                            <td>{{field.user.username}}</td>
+                            <td>{{field.user.first_name}}</td>
+                            <td>{{field.user.persona.edad}}</td>
+                            <td>{{field.ofertalaboral.area_de_trabajo}}</td>
+                            <td>{{field.ofertalaboral.cargo_solicitado}}</td>
+                            <td>{{field.ofertalaboral.salario_minimo}}</td>
+                            <td>
+                                <a class="btn-table btn-view-tb" href="{% url 'solicitudlaboral_view' field.id %}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                                    </svg>
+                                </a>
+                                <a class="btn-table btn-delete-tb" href="{% url 'solicitudlaboral_delete' field.id %}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endblock contenedor-solicitudes %}
+        </main>
+   </div>     
+{% endblock main-administracion %}

@@ -116,5 +116,5 @@ class SolicitudLaboral(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self):
-        texto = 'oferta laboral: {0}. persona: {1}.'        
+        texto = 'Solicitud oferta laboral: {0}. persona: {1}.'        
         return texto.format(self.ofertalaboral.area_de_trabajo,self.user.first_name)

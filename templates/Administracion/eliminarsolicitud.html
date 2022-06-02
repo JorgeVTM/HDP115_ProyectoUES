@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% extends 'Administracion/solicitudeslaborales.html' %}
+{% load compress %}
+{% load static %}
+
+{% block contenedor-solicitudes %}
+<main class="contenedor-form main-admin-ofertaslab">
+    <form method="post" class="form-perfil form-eliminar">{% csrf_token %}
+        <h3>¿Estas seguros que quieres elimiar <strong>"{{ object }}"</strong>?</h3>
+        {% if relacionados != None %}
+            <h3><br>Se eliminarán los siguientes objetos relacionados: <strong>{{ relacionados.count }} objetos relacionados</strong></h3>
+            {% for oferta in relacionados %}
+            <p><br>{{oferta}}</p>
+            {% endfor %}
+        {% endif %}
+        {{ form }}
+        <div>
+            <a href="{% url 'solicitudeslaborales_all'%}">Cancelar</a>  
+            <button>Eliminar Registro</button>
+        </div>
+    </form>
+</main>
+{% endblock contenedor-solicitudes %}

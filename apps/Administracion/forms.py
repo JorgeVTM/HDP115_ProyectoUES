@@ -28,7 +28,7 @@ class OfertasLaboralesForm(forms.ModelForm):
         super(OfertasLaboralesForm, self).__init__(*args, **kwargs)
         self.fields['salario_maximo'].required = False
         self.fields['descripcion'].required = False
-        
+         
 #formulario para las categorias
 class CategoriaForm(forms.ModelForm):
     

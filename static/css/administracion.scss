@@ -59,7 +59,8 @@
     }
     a{
         width: max-content;
-        padding: 10px;
+        margin: 30px 20px;
+        padding: 10px 20px;
         border-radius: 10px;
         color: #ffffff;
         background-color: $color-btn-3;
@@ -71,15 +72,16 @@
     display: flex;
 }
 
-.navbar-admin-ofertaslab{
+.sub-navbar-admin{
     @extend .caja-presentacion !optional;
     @extend .navbar !optional;
     background-color: $color-navbar-4;
+    color: $color-texto-1;
     position: initial;
     height: 40px;
 }
 
-.sidebar-admin-ofertaslab{
+.sub-sidebar-admin{
     @extend .sidebar-perfil !optional;
     background-color: $color-general-9;
     position: initial;
@@ -95,7 +97,7 @@
     }
 }
 
-.main-admin-ofertaslab{
+.sub-main-admin{
     background-color: $color-general-3;
     overflow: auto;
 }
@@ -140,6 +142,10 @@
     color: $color-texto-1;
     box-sizing: border-box;
     display: inline-flex;
+}
+
+.btn-view-tb{
+    background-color: $color-btn-4;
 }
 
 .btn-update-tb{

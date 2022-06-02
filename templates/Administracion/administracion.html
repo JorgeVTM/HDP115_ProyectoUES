@@ -10,7 +10,7 @@
         <ul>
             <li><a href="/">Inicio</a></li>
             <li><a href="{% url 'ofertaslaborales_all' %}">Ofertas Laborales</a></li>
-            <li><a href="/">Usuarios</a></li>
+            <li><a href="{% url 'solicitudeslaborales_all' %}">Solicitudes Laborales</a></li>
         </ul>
     </nav>
     <div class="contenedor-admin">
@@ -26,7 +26,8 @@
                 <p>
                     Plataforma para la administración y gestion de la pagina web ofertas laborales de la <strong>Universidad de El Salvador</strong>
                 </p>
-                <a href="{% url 'ofertaslaborales_all' %}">Ir a administración</a>
+                <a href="{% url 'ofertaslaborales_all' %}">Administración</a>
+                <a href="{% url 'solicitudeslaborales_all' %}">Solicitudes</a>
             </section>
         </div>
         {% endblock main-administracion %}
