@@ -7,6 +7,7 @@
 - Git
 - Python 3.10
 - Django 4.0.4
+- (Asegúrese de marcar: instalar pip. En el instalador de python)
     - pip install Django==4.0.4
 - Django-Compressor
     - pip install django_compressor
